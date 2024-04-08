@@ -1,4 +1,4 @@
-package com.mycompany.mavenproject2.entities;
+package com.pg.edu.pl.classes;
 
 import lombok.Data;
 
