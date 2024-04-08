@@ -13,6 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
+            <version>1.18.30</version>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
