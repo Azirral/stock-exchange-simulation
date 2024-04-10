@@ -28,4 +28,15 @@ public class Stock extends EquityHolding {
         this.pe = pe;
         this.earningsAnnouncement = earningsAnnouncement;
     }
+    // Override toString method to print the object
+    @Override
+    public String toString() {
+        return "Stock{" +
+                "stockExchange='" + stockExchange + '\'' +
+                ", eps=" + eps +
+                ", pe=" + pe +
+                ", earningsAnnouncement='" + earningsAnnouncement + '\'' +
+                "} " + super.toString();
+    }
+
 }
