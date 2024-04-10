@@ -25,16 +25,16 @@ public class Wallet {
     private Map<EquityHolding, Double> equitiesOwned;
 
     /** Method responsible for finding a given equity in equitiesOwned */
-    private EquityHolding findEquityHolding(String equitySymbol, Map<EquityHolding, Double> equitiesOwned) {
-        for (EquityHolding equity : equitiesOwned.keySet()) {
-            if (equity.getSymbol().equals(equitySymbol))
-                return equity;
+    public Map.Entry<EquityHolding, Double> findEquityHolding(String equitySymbol) {
+        for (Map.Entry<EquityHolding,Double> entry : this.equitiesOwned.entrySet()) {
+            if (entry.getKey().getSymbol().equals(equitySymbol))
+                return entry;
         }
         return null;
     }
 
     /** Method responsible for calculating total value of equities owned in USD by the user */
-    private Double calculateExchangesValue(Map<EquityHolding, Double> equitiesOwned) {
+    public Double calculateExchangesValue(Map<EquityHolding, Double> equitiesOwned) {
         double totalValueOwned = 0;
         for (Map.Entry<EquityHolding,Double> entry : equitiesOwned.entrySet()) {
             totalValueOwned += (entry.getKey().getPrice() * entry.getValue());
