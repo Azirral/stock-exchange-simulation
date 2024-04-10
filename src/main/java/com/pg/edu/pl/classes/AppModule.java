@@ -6,6 +6,31 @@ import java.util.Scanner;
 
 public class AppModule {
 
+    public static void login() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to Stock Master - Login");
+
+        System.out.print("Enter username: ");
+        try {
+            String enteredUsername = scanner.nextLine();
+
+            System.out.print("Enter password: ");
+            String enteredPassword = scanner.nextLine();
+
+            if (enteredUsername.equals("janekludwicki") && enteredPassword.equals("qwerty")) {
+                System.out.println("Login successful!");
+                // Call your main menu function or perform further actions after successful login
+            } else {
+                System.out.println("Invalid username or password. Please try again.");
+                // You might want to add a loop here to allow the user to retry or exit gracefully
+            }
+        } catch(NoSuchElementException e){
+            System.out.println("Input not available. Please provide valid input.");
+            // Consume the invalid input to prevent an infinite loop
+            scanner.next();
+        }
+    }
     public static void printMainMenu() {
         System.out.println("Welcome to Stock Master - Your Ultimate Stock Simulation Experience!\n");
         System.out.println("Main Menu:\n");
