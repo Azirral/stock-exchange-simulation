@@ -6,7 +6,14 @@ import java.util.Scanner;
 
 public class AppModule {
 
-
+    public static void printMainMenu() {
+        System.out.println("Welcome to Stock Master - Your Ultimate Stock Simulation Experience!\n");
+        System.out.println("Main Menu:\n");
+        System.out.println("1. Logging in");
+        System.out.println("2. List stocks");
+        System.out.println("3. Show UserProfile");
+        System.out.println("4. Exit");
+    }
     public static void runApplication() {
         UserProfile user1 = new UserProfile(Color.red, "Jan", "Ludwicki", "janekludwicki",
                 "qwerty", "halo@wp.pl");
