@@ -1,6 +1,5 @@
 package com.pg.edu.pl.classes;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
