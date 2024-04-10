@@ -26,4 +26,15 @@ public class UserProfile extends Account{
         this.name = name;
         this.surname = surname;
     }
+
+    // Override toString method to print the object
+    @Override
+    public String toString() {
+        return "UserProfile{" +
+                "profileBackground=" + profileBackground +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", wallet=" + wallet +
+                '}';
+    }
 }
