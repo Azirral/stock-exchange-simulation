@@ -47,4 +47,28 @@ public abstract class EquityHolding {
     private Long sharesOutstanding;
     /** Time of registered screening of equity. */
     private Long timestamp;
+    // Override toString method to print the object
+    @Override
+    public String toString() {
+        return "EquityHolding{" +
+                "name='" + name + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", price=" + price +
+                ", changesPercentage=" + changesPercentage +
+                ", change=" + change +
+                ", dayLow=" + dayLow +
+                ", dayHigh=" + dayHigh +
+                ", yearHigh=" + yearHigh +
+                ", yearLow=" + yearLow +
+                ", marketCap=" + marketCap +
+                ", priceAvg50=" + priceAvg50 +
+                ", priceAvg200=" + priceAvg200 +
+                ", volume=" + volume +
+                ", avgVolume=" + avgVolume +
+                ", open=" + open +
+                ", previousClose=" + previousClose +
+                ", sharesOutstanding=" + sharesOutstanding +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }
