@@ -1,4 +1,4 @@
-package com.pg.edu.pl;
+package com.pg.edu.pl.classes;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
