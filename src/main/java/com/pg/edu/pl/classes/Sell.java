@@ -15,6 +15,7 @@ public class Sell extends Transaction {
 
     @Override
     public void performTransaction() {
-
+        this.getWallet().findEquityHolding(this.getEquityHolding().getSymbol()).setValue(this.getWallet().
+                findEquityHolding(this.getEquityHolding().getSymbol()).getValue() - this.getAmount());
     }
 }
