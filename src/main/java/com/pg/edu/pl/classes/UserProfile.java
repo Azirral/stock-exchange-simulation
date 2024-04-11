@@ -27,6 +27,14 @@ public class UserProfile extends Account{
         this.surname = surname;
     }
 
+    protected UserProfile(String name, String surname,
+                          String login, String password, String email) {
+        super(login, password, email);
+        this.profileBackground = null;
+        this.name = name;
+        this.surname = surname;
+    }
+
     // Override toString method to print the object
     @Override
     public String toString() {
