@@ -1,4 +1,4 @@
-package com.pg.edu.pl.classes;
+package com.pg.edu.pl.model;
 
 import lombok.Getter;
 import lombok.Setter;

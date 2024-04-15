@@ -1,4 +1,6 @@
-package com.pg.edu.pl.classes;
+package com.pg.edu.pl.model;
+
+import com.pg.edu.pl.model.equityEntities.elements.Quote;
 
 import java.awt.*;
 import java.util.NoSuchElementException;
@@ -42,7 +44,7 @@ public class AppModule {
     public static void runApplication() {
         UserProfile user1 = new UserProfile(Color.red, "Jan", "Ludwicki", "janekludwicki",
                 "qwerty", "halo@wp.pl");
-        Stock stock1 = new Stock("NASDAQ", -0.17, -6.29,
+        Quote quote1 = new Quote(-0.17, -6.29,
                 "2024-05-09T20:00:00.000+0000", "AAACX",
                 "American Beacon Balanced Fund R5 Class", 6.22, 0.0,
                 0.0, 6.22, 6.22, 6.55, 6.14, (long) 0,
@@ -66,7 +68,7 @@ public class AppModule {
                         login();
                         break;
                     case 2:
-                        System.out.println(stock1);
+                        System.out.println(quote1);
                         break;
                     case 3:
                         System.out.println(user1);
