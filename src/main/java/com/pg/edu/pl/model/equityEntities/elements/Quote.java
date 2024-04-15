@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Comparator;
+
 /** Quote class is a subclass of EquityHolding that resembles a single quote*/
 @Data
 @Builder
 @Getter
 @Setter
-public class Quote extends EquityHolding {
+public class Quote extends EquityHolding implements Comparable<Quote> {
     /** Earnings per share of stock */
     Double eps;
     /** Price to earnings ratio. */
@@ -28,14 +30,9 @@ public class Quote extends EquityHolding {
         this.pe = pe;
         this.earningsAnnouncement = earningsAnnouncement;
     }
-    // Override toString method to print the object
-    @Override
-    public String toString() {
-        return "Stock{" +
-                ", eps=" + eps +
-                ", pe=" + pe +
-                ", earningsAnnouncement='" + earningsAnnouncement + '\'' +
-                "} " + super.toString();
-    }
 
+    @Override
+    public int compareTo(Quote o) {
+        return this.toString().compareTo(o.toString());
+    }
 }

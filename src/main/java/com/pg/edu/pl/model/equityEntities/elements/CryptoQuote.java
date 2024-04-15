@@ -1,16 +1,14 @@
 package com.pg.edu.pl.model.equityEntities.elements;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /** CryptoQuote class is a subclass of EquityHolding that resembles a cryptocurrency quote*/
 @Builder
 @Data
 @Setter
 @Getter
-public class CryptoQuote extends EquityHolding{
+@ToString
+public class CryptoQuote extends EquityHolding implements Comparable<CryptoQuote>{
     /** This variable is linked to the "normal" (national currency) currency
      * in which cryptocurrency is traded in
      * */
@@ -22,5 +20,10 @@ public class CryptoQuote extends EquityHolding{
         super(price, changesPercentage, change, dayLow, dayHigh, yearHigh, yearLow, marketCap,
                 priceAvg50, priceAvg200, volume, avgVolume, open, previousClose, sharesOutstanding, timestamp);
         this.currency = currency;
+    }
+
+    @Override
+    public int compareTo(CryptoQuote o) {
+        return this.toString().compareTo(o.toString());
     }
 }

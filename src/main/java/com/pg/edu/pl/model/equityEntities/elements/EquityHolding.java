@@ -12,6 +12,7 @@ import java.util.Comparator;
 @Builder
 @Getter
 @Setter
+@ToString
 public abstract class EquityHolding{
     private Double price;
     private Double changesPercentage;
@@ -47,26 +48,4 @@ public abstract class EquityHolding{
     private Long sharesOutstanding;
     /** Time of registered screening of equity. */
     private Long timestamp;
-    // Override toString method to print the object
-    @Override
-    public String toString() {
-        return "EquityHolding{" +
-                ", price=" + price +
-                ", changesPercentage=" + changesPercentage +
-                ", change=" + change +
-                ", dayLow=" + dayLow +
-                ", dayHigh=" + dayHigh +
-                ", yearHigh=" + yearHigh +
-                ", yearLow=" + yearLow +
-                ", marketCap=" + marketCap +
-                ", priceAvg50=" + priceAvg50 +
-                ", priceAvg200=" + priceAvg200 +
-                ", volume=" + volume +
-                ", avgVolume=" + avgVolume +
-                ", open=" + open +
-                ", previousClose=" + previousClose +
-                ", sharesOutstanding=" + sharesOutstanding +
-                ", timestamp=" + timestamp +
-                '}';
-    }
 }
