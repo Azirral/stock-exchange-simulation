@@ -1,6 +1,6 @@
-package com.pg.edu.pl.classes;
+package com.pg.edu.pl.model;
 
-import lombok.*;
+import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 
 /**
  * Sell class is a subclass of abstract class Transaction. It is responsible for

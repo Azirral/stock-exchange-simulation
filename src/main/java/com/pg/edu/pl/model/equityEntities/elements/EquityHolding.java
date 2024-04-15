@@ -1,4 +1,4 @@
-package com.pg.edu.pl.model.EquityEntities;
+package com.pg.edu.pl.model.equityEntities.elements;
 
 import lombok.*;
 
@@ -10,10 +10,9 @@ import java.util.Comparator;
  */
 @Data
 @Builder
-@Getter(AccessLevel.PROTECTED)
-@Setter(AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class EquityHolding implements Comparator {
+@Getter
+@Setter
+public abstract class EquityHolding{
     private Double price;
     private Double changesPercentage;
     /** Difference between the current price

@@ -1,5 +1,6 @@
-package com.pg.edu.pl.classes;
+package com.pg.edu.pl.model;
 
+import com.pg.edu.pl.model.equityEntities.elements.Quote;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,19 +11,19 @@ import java.util.Date;
 @Setter
 public class StockPrediction extends Prediction {
     // Stock for which we are predicting the price
-    private Stock stock;
+    private Quote quote;
 
-    public StockPrediction(String name, String description, Double predictedPrice, Double accuracy, Date log_date, Stock stock) {
+    public StockPrediction(String name, String description, Double predictedPrice, Double accuracy, Date log_date, Quote quote) {
         super(name, description, predictedPrice, accuracy, log_date);
-        this.stock = stock;
+        this.quote = quote;
     }
 
     @Override
     public void predict() {
         // Simple prediction algorithm: using previous day's closing price as the predicted price for the next day
-        if (stock != null && stock.getPreviousClose() != null) {
+        if (quote != null && quote.getPreviousClose() != null) {
             // Assume predicted price is the same as previous day's closing price
-            setPredictedPrice(stock.getPreviousClose());
+            setPredictedPrice(quote.getPreviousClose());
         } else {
             // If stock data is not available, set predicted price to null
             setPredictedPrice(null);

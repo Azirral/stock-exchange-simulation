@@ -1,4 +1,4 @@
-package com.pg.edu.pl.model.EquityEntities;
+package com.pg.edu.pl.model.equityEntities.elements;
 
 import lombok.Builder;
 import lombok.Data;
