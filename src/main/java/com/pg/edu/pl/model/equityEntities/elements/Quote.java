@@ -1,14 +1,16 @@
-package com.pg.edu.pl.classes;
+package com.pg.edu.pl.model.EquityEntities;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-/** Stock class is a subclass of EquityHolding that resembles a Stock equity*/
+/** Quote class is a subclass of EquityHolding that resembles a single quote*/
+@Data
+@Builder
 @Getter
 @Setter
-public class Stock extends EquityHolding {
-    /** The stock market on which stock is listed. */
-    String stockExchange;
+public class Quote extends EquityHolding {
     /** Earnings per share of stock */
     Double eps;
     /** Price to earnings ratio. */
@@ -16,14 +18,12 @@ public class Stock extends EquityHolding {
     /** Date and time of Statement of company's profitability. */
     String earningsAnnouncement;
 
-    protected Stock(String stockExchange, Double eps, Double pe, String earningsAnnouncement, String name,
-                    String symbol, Double price, Double changesPercentage, Double change,
+    protected Quote(Double eps, Double pe, String earningsAnnouncement, Double price, Double changesPercentage, Double change,
                     Double dayLow, Double dayHigh, Double yearHigh, Double yearLow, Long marketCap,
                     Double priceAvg50, Double priceAvg200, Long volume, Long avgVolume, Double open,
                     Double previousClose, Long sharesOutstanding, Long timestamp) {
-        super(name, symbol, price, changesPercentage, change, dayLow, dayHigh, yearHigh, yearLow, marketCap,
+        super(price, changesPercentage, change, dayLow, dayHigh, yearHigh, yearLow, marketCap,
                 priceAvg50, priceAvg200, volume, avgVolume, open, previousClose, sharesOutstanding, timestamp);
-        this.stockExchange = stockExchange;
         this.eps = eps;
         this.pe = pe;
         this.earningsAnnouncement = earningsAnnouncement;
@@ -32,7 +32,6 @@ public class Stock extends EquityHolding {
     @Override
     public String toString() {
         return "Stock{" +
-                "stockExchange='" + stockExchange + '\'' +
                 ", eps=" + eps +
                 ", pe=" + pe +
                 ", earningsAnnouncement='" + earningsAnnouncement + '\'' +

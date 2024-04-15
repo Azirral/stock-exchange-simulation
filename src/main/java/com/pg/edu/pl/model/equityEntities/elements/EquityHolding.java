@@ -1,18 +1,19 @@
-package com.pg.edu.pl.classes;
+package com.pg.edu.pl.model.EquityEntities;
 
 import lombok.*;
+
+import java.util.Comparator;
 
 /**
  * EquityHolding class is an abstract class that holds common variables
  * for Stock and Crypto classes that inherit from it.
  */
+@Data
+@Builder
 @Getter(AccessLevel.PROTECTED)
 @Setter(AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class EquityHolding {
-    private String name;
-    /** Abbreviation/Index of name. */
-    private String symbol;
+public abstract class EquityHolding implements Comparator {
     private Double price;
     private Double changesPercentage;
     /** Difference between the current price
@@ -51,8 +52,6 @@ public abstract class EquityHolding {
     @Override
     public String toString() {
         return "EquityHolding{" +
-                "name='" + name + '\'' +
-                ", symbol='" + symbol + '\'' +
                 ", price=" + price +
                 ", changesPercentage=" + changesPercentage +
                 ", change=" + change +
