@@ -1,35 +1,25 @@
 package com.pg.edu.pl.model.equityEntities.elements;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.pg.edu.pl.model.equityEntities.categories.Stock;
+import lombok.*;
 
 import java.util.Comparator;
 
 /** Quote class is a subclass of EquityHolding that resembles a single quote*/
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class Quote extends EquityHolding implements Comparable<Quote> {
+    private Stock stock;
     /** Earnings per share of stock */
-    Double eps;
+    private Double eps;
     /** Price to earnings ratio. */
-    Double pe;
+    private Double pe;
     /** Date and time of Statement of company's profitability. */
-    String earningsAnnouncement;
-
-    protected Quote(Double eps, Double pe, String earningsAnnouncement, Double price, Double changesPercentage, Double change,
-                    Double dayLow, Double dayHigh, Double yearHigh, Double yearLow, Long marketCap,
-                    Double priceAvg50, Double priceAvg200, Long volume, Long avgVolume, Double open,
-                    Double previousClose, Long sharesOutstanding, Long timestamp) {
-        super(price, changesPercentage, change, dayLow, dayHigh, yearHigh, yearLow, marketCap,
-                priceAvg50, priceAvg200, volume, avgVolume, open, previousClose, sharesOutstanding, timestamp);
-        this.eps = eps;
-        this.pe = pe;
-        this.earningsAnnouncement = earningsAnnouncement;
-    }
+    private String earningsAnnouncement;
 
     @Override
     public int compareTo(Quote o) {
