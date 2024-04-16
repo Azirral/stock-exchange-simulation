@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
+import java.util.Objects;
 
 
 /**
@@ -11,7 +12,7 @@ import java.awt.*;
  * */
 @Setter
 @Getter
-public class UserProfile extends Account{
+public class UserProfile extends Account implements Cloneable {
     /** Color of the user's profile picture */
     private Color profileBackground;
     private String name;
@@ -44,5 +45,18 @@ public class UserProfile extends Account{
                 ", surname='" + surname + '\'' +
                 ", wallet=" + wallet +
                 '}';
+    }
+
+    // deep cloning method
+    @Override
+    public UserProfile clone() {
+        try {
+            UserProfile cloned = (UserProfile) super.clone();
+            cloned.profileBackground = new Color(profileBackground.getRGB()); // Deep clone of Color
+            cloned.wallet = wallet.clone(); // Deep clone of Wallet
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // Since UserProfile implements Cloneable, this should never happen
+        }
     }
 }
