@@ -15,7 +15,7 @@ import java.util.Map;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Wallet {
+public class Wallet implements Cloneable{
     /** Value of all equities owned in USD (exchanged)*/
     private Double exchangeValue;
     /** Amount of money user has in the account that is not exchanged to equity*/
@@ -41,5 +41,14 @@ public class Wallet {
             totalValueOwned += (entry.getKey().getPrice() * entry.getValue());
         }
         return totalValueOwned;
+    }
+
+    @Override
+    public Wallet clone() {
+        try {
+            return (Wallet) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
