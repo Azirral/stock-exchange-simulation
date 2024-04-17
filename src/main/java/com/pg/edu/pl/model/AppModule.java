@@ -24,8 +24,9 @@ public class AppModule {
         System.out.println("7. Change name");
         System.out.println("8. Save profile");
         System.out.println("9. Print users");
-        System.out.println("10. Update");
-        System.out.println("11. Exit");
+        System.out.println("10. Add 10 credits to the user's wallet");
+        System.out.println("11. Print wallets");
+        System.out.println("12. Exit");
     }
     public static void runApplication() {
         Accounts accounts = new Accounts(new ArrayList<UserProfile>());
@@ -122,6 +123,12 @@ public class AppModule {
                         System.out.println(user2);
                         break;
                     case 10:
+                        user2.getWallet().setCredit(10.0);
+                        System.out.println("Credits were added successfully");
+                    case 11:
+                        System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
+                        System.out.println("user2 wallet: " + user2.getWallet().getCredit());
+                    case 12:
                         System.out.println("Exiting Stock Master. Goodbye!");
                         System.exit(0); // Terminate the program
                         break;
