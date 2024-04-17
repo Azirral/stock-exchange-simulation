@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -14,14 +13,23 @@ import java.util.Scanner;
 @Setter
 @AllArgsConstructor
 public class Accounts {
+    /** List that contains all users that had created their accounts*/
     private ArrayList<UserProfile> users;
 
-
+    /**
+     * Method to register a new user.
+     */
     public void register() {
         UserProfile user = registeringProcedure();
         users.add(user);
     }
 
+    /**
+     * Method to find a user account based on username and password.
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @return The UserProfile object if found, or null if not found.
+     */
     private UserProfile findUserAccount(String username, String password) {
         for (UserProfile userProfile : users) {
             if (userProfile.getLogin().equals(username) && userProfile.getPassword().equals(password))
@@ -30,6 +38,9 @@ public class Accounts {
         return null;
     }
 
+    /**
+     * Method to handle user login.
+     */
     public void logIn() {
         Scanner scanner = new Scanner(System.in);
 
@@ -37,26 +48,28 @@ public class Accounts {
 
         System.out.print("Enter username: ");
         try {
-        String enteredUsername = scanner.nextLine();
+            String enteredUsername = scanner.nextLine();
 
-        System.out.print("Enter password: ");
-        String enteredPassword = scanner.nextLine();
+            System.out.print("Enter password: ");
+            String enteredPassword = scanner.nextLine();
 
-        if (findUserAccount(enteredUsername, enteredPassword) == null) {
-            System.out.println("Invalid username or password. Please try again.");
-            logIn();
+            if (findUserAccount(enteredUsername, enteredPassword) == null) {
+                System.out.println("Invalid username or password. Please try again.");
+                logIn();
+            }
+            System.out.println("You were successfully logged in!");
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Input not available. Please provide valid input.");
+            // Consume the invalid input to prevent an infinite loop
+            scanner.next();
         }
-        System.out.println("You were successfully logged in!");
-
-        }
-        catch(
-    NoSuchElementException e){
-        System.out.println("Input not available. Please provide valid input.");
-        // Consume the invalid input to prevent an infinite loop
-        scanner.next();
-    }
     }
 
+    /**
+     * Method to handle the registration procedure for a new user.
+     * @return The newly created UserProfile object.
+     */
     private UserProfile registeringProcedure() {
         Color profileBackground;
         Scanner scanner = new Scanner(System.in);

@@ -1,6 +1,7 @@
 package com.pg.edu.pl.model;
 
 
+import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,11 +24,11 @@ public class Wallet implements Cloneable{
     /** Amount of money user has gained/lost since last sale/purchase */
     private Double lastSaleValue;
     /** Map of all equities and amount of them user has */
-    private Map<EquityHolding, Double> equitiesOwned;
+    private Map<Symbol, Double> equitiesOwned;
 
     /** Method responsible for finding a given equity in equitiesOwned */
-    public Map.Entry<EquityHolding, Double> findEquityHolding(String equitySymbol) {
-        for (Map.Entry<EquityHolding,Double> entry : this.equitiesOwned.entrySet()) {
+    public Map.Entry<Symbol, Double> findEquityHolding(String equitySymbol) {
+        for (Map.Entry<Symbol,Double> entry : this.equitiesOwned.entrySet()) {
             if (entry.getKey().getSymbol().equals(equitySymbol))
                 return entry;
         }

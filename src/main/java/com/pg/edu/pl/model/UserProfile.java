@@ -40,7 +40,9 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
         this.surname = surname;
     }
 
-    // Override toString method to print the object
+    /**
+     * Override toString method to print the object
+     */
     @Override
     public String toString() {
         return "UserProfile{" +
@@ -64,11 +66,24 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
         }
     }
 
+    /**
+     * Compares this UserProfile with another UserProfile for order.
+     * @param o The UserProfile to be compared.
+     * @return A negative integer, zero, or a positive integer as this UserProfile is less than,
+     * equal to, or greater than the specified UserProfile.
+     */
     @Override
     public int compareTo(UserProfile o) {
          return this.toString().compareTo(o.toString());
     }
 
+    /**
+     * Compares two UserProfiles based on their wallet credit. Made for sorting purpose.
+     * @param o1 The first UserProfile to be compared.
+     * @param o2 The second UserProfile to be compared.
+     * @return A negative integer, zero, or a positive integer as the first UserProfile's
+     * wallet credit is less than, equal to, or greater than the second UserProfile's wallet credit.
+     */
     @Override
     public int compare(UserProfile o1, UserProfile o2) {
         return o1.getWallet().getCredit().compareTo(o2.getWallet().getCredit());
