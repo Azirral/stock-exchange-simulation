@@ -1,7 +1,7 @@
 package com.pg.edu.pl.model;
 
+import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
-import com.pg.edu.pl.model.equityEntities.elements.Symbol;
 import lombok.*;
 
 import java.util.Comparator;
@@ -26,7 +26,7 @@ public abstract class Transaction implements Comparable<Transaction>, Comparator
     private Wallet wallet;
 
     /** Function responsible for performing the transaction. */
-    public abstract void performTransaction();
+    public abstract void performTransaction(Symbol symbol);
 
     /**
      * Compares this transaction with the specified transaction for order.
