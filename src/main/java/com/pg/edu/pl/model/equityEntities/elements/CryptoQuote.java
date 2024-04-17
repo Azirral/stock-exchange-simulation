@@ -12,7 +12,7 @@ import lombok.*;
 @Setter
 @Getter
 @ToString(callSuper = true)
-public class CryptoQuote extends EquityHolding implements Comparable<CryptoQuote>{
+public class CryptoQuote extends EquityHolding implements Comparable<EquityHolding>{
     /** The cryptocurrency associated with this quote. */
     private Crypto crypto;
 
@@ -25,7 +25,7 @@ public class CryptoQuote extends EquityHolding implements Comparable<CryptoQuote
      * @return A negative integer, zero, or a positive integer as this crypto quote is less than, equal to, or greater than the specified crypto quote.
      */
     @Override
-    public int compareTo(CryptoQuote o) {
+    public int compareTo(EquityHolding o) {
         return this.toString().compareTo(o.toString());
     }
 }

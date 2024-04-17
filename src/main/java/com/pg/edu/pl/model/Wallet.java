@@ -35,7 +35,7 @@ public class Wallet implements Cloneable{
      */
     public Map.Entry<EquityHolding, Double> findEquityHolding(EquityHolding equity) {
         for (Map.Entry<EquityHolding,Double> entry : this.equitiesOwned.entrySet()) {
-            if (entry.getKey().toString().compareTo(equity.toString()) == 0)
+            if (entry.getKey().compareTo(equity) == 0)
                 return entry;
         }
         return null;
@@ -64,7 +64,7 @@ public class Wallet implements Cloneable{
     private Transaction findTransactionInHistory(Long timestamp, EquityHolding equity) {
         for (Transaction transaction : transactionsHistory) {
             if(transaction.getTimestamp().equals(timestamp) &&
-                    (transaction.getEquityHolding().toString().compareTo(equity.toString()) == 0))
+                    (transaction.getEquityHolding().compareTo(equity) == 0))
                 return transaction;
         }
         return null;
