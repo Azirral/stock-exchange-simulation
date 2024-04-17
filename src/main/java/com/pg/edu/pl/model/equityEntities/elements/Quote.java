@@ -3,8 +3,6 @@ package com.pg.edu.pl.model.equityEntities.elements;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import lombok.*;
 
-import java.util.Comparator;
-
 /**
  * Quote class is a subclass of EquityHolding that resembles a single quote
  */

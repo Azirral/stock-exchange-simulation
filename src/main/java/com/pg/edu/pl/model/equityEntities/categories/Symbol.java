@@ -12,7 +12,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public abstract class Symbol {
+public abstract class Symbol implements Comparable<Symbol> {
     /**
      * The symbol of the equity.
      */
@@ -27,4 +27,13 @@ public abstract class Symbol {
      * The stock exchange where the equity is traded.
      */
     String stockExchange;
+
+    /**
+     * Compares this symbol to another symbol based on their string representations.
+     * @param o The other symbol to compare to.
+     * @return A negative integer, zero, or a positive integer as this symbol is less than, equal to, or greater than the specified symbol.
+     */
+    public int compareTo(Symbol o) {
+        return this.toString().compareTo(o.toString());
+    }
 }

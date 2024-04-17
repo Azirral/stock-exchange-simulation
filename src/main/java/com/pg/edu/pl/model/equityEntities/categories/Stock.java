@@ -12,7 +12,7 @@ import lombok.*;
 @ToString(callSuper = true)
 @Getter
 @Setter
-public class Stock extends Symbol implements Comparable<Stock> {
+public class Stock extends Symbol implements Comparable<Symbol> {
     /** The collection of quotes associated with this stock. */
     private Quotes quotes;
 
@@ -22,7 +22,7 @@ public class Stock extends Symbol implements Comparable<Stock> {
      * @return A negative integer, zero, or a positive integer as this stock is less than, equal to, or greater than the specified stock.
      */
     @Override
-    public int compareTo(Stock o) {
+    public int compareTo(Symbol o) {
         return this.toString().compareTo(o.toString());
     }
 }

@@ -1,6 +1,7 @@
 package com.pg.edu.pl.model;
 
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
+import com.pg.edu.pl.model.equityEntities.elements.Symbol;
 import lombok.*;
 
 import java.util.Comparator;
