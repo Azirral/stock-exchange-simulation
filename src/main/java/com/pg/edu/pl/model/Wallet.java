@@ -46,6 +46,11 @@ public class Wallet implements Cloneable{
         return totalValueOwned;
     }
 
+    /**
+     * Searches for a transaction in the transaction history based on the provided timestamp.
+     * @param timestamp The timestamp of the transaction to search for.
+     * @return The transaction object if found, or null if not found.
+     */
     private Transaction findTransactionInHistory(Long timestamp) {
         for (Transaction transaction : transactionsHistory) {
             if(transaction.getTimestamp().equals(timestamp))
