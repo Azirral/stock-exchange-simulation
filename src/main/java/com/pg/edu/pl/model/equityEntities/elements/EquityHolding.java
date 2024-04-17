@@ -88,6 +88,9 @@ public abstract class EquityHolding implements Comparable<EquityHolding> {
     /** Time of registered screening of equity. */
     private Long timestamp;
 
+    /** Symbol of the equity. */
+    private String symbol;
+
     /**
      * Compares this EquityHolding object with another EquityHolding object based on their string representations.
      * @param o The other EquityHolding object to compare to.
