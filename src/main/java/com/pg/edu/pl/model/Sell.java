@@ -45,5 +45,6 @@ public class Sell extends Transaction {
         else {
             System.out.println("No such qoute in wallet, please make sure you chosen the proper quote.");
         }
+        this.getWallet().getTransactionsHistory().add(this);
     }
 }
