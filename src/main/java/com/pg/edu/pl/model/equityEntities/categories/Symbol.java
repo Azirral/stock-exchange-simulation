@@ -1,6 +1,7 @@
 package com.pg.edu.pl.model.equityEntities.categories;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * The Symbol class represents a financial symbol, which is a unique identifier for an equity or cryptocurrency.
@@ -8,7 +9,7 @@ import lombok.*;
  * and the stock exchange or trading platform where it is listed.
  */
 @Data
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @ToString

@@ -2,12 +2,13 @@ package com.pg.edu.pl.model.equityEntities.elements;
 
 import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * CryptoQuote class is a subclass of EquityHolding that resembles a cryptocurrency quote
  */
 @EqualsAndHashCode(callSuper = true)
-@Builder
+@SuperBuilder
 @Data
 @Setter
 @Getter

@@ -2,6 +2,7 @@ package com.pg.edu.pl.model.equityEntities.categories;
 
 import com.pg.edu.pl.model.equityEntities.elements.collections.CryptoQuotes;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Class Crypto represents a category of cryptocurrencies.
@@ -11,7 +12,7 @@ import lombok.*;
 @Setter
 @Data
 @ToString(callSuper = true)
-@Builder
+@SuperBuilder
 public class Crypto extends Symbol implements Comparable<Symbol>{
     /** The currency in which the cryptocurrency is traded. */
     private String currency;

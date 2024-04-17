@@ -2,13 +2,14 @@ package com.pg.edu.pl.model.equityEntities.elements;
 
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Quote class is a subclass of EquityHolding that resembles a single quote
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @ToString(callSuper = true)

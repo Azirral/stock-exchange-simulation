@@ -2,12 +2,13 @@ package com.pg.edu.pl.model.equityEntities.categories;
 
 import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * The type Stock represents a category of stocks.
  */
 @EqualsAndHashCode(callSuper = true)
-@Builder
+@SuperBuilder
 @Data
 @ToString(callSuper = true)
 @Getter

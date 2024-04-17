@@ -1,12 +1,13 @@
 package com.pg.edu.pl.model;
 
+import com.pg.edu.pl.model.equityEntities.categories.Stock;
+import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
+import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class AppModule {
 
@@ -15,23 +16,51 @@ public class AppModule {
         System.out.println("Welcome to Stock Master - Your Ultimate Stock Simulation Experience!\n");
         System.out.println("Main Menu:\n");
         System.out.println("1. Logging in");
-        System.out.println("2. List stocks");
-        System.out.println("3. Show UserProfile");
-        System.out.println("4. Register new Account");
-        System.out.println("5. Exit");
+        System.out.println("2. Register new Account");
+        System.out.println("3. List stocks");
+        System.out.println("4. Show UserProfile");
+        System.out.println("5. Purchase");
+        System.out.println("6. Sell");
+        System.out.println("7. Change name");
+        System.out.println("8. Save profile");
+        System.out.println("9. Exit");
     }
     public static void runApplication() {
         Accounts accounts = new Accounts(new ArrayList<UserProfile>());
-        UserProfile user1 = new UserProfile(ProfileColor.AZURE.getProfileColor(), "Jan", "Ludwicki", "janekludwicki",
+        UserProfile user1 = new UserProfile(ProfileColor.AZURE.getProfileColor()
+                , "Jan", "Ludwicki", "janekludwicki",
                 "qwerty", "halo@wp.pl");
+        UserProfile user2 = null;
         accounts.getUsers().add(user1);
-        Quote quote1 = new Quote(-0.17, -6.29,
-                "2024-05-09T20:00:00.000+0000", "AAACX",
-                "American Beacon Balanced Fund R5 Class", 6.22, 0.0,
-                0.0, 6.22, 6.22, 6.55, 6.14, (long) 0,
-                6.237, 6.24775, (long) 0, (long) 0, 6.22, 6.22,
-                (long) 0, (long) 0);
-
+        Quote quote = Quote.builder()
+                .price(145.775)
+                .changesPercentage(0.32)
+                .change(0.465)
+                .dayLow(143.9)
+                .dayHigh(146.71)
+                .yearHigh(179.61)
+                .yearLow(124.17)
+                .marketCap(2306437439846L)
+                .priceAvg50(140.8724)
+                .priceAvg200(147.18594)
+                .volume(42478176L)
+                .avgVolume(73638864L)
+                .open(144.38)
+                .previousClose(145.31)
+                .eps(5.89)
+                .pe(24.75)
+                .earningsAnnouncement("2023-04-26T10:59:00.000+0000")
+                .sharesOutstanding(15821899776L)
+                .timestamp(1677790773L)
+                .stock(null) // Set the Stock object
+                .build();
+        Quotes quotes = Quotes.builder().quote(quote).build();
+        Stock symbol1 = Stock.builder()
+                .symbol("AAACX")
+                .name("American Beacon Balanced Fund R5 Class")
+                .stockExchange("NASDAQ")
+                .quotes(quotes)
+                .build();
         Scanner scanner = new Scanner(System.in);
         try {
             while (true) {
@@ -49,15 +78,55 @@ public class AppModule {
                         accounts.logIn();
                         break;
                     case 2:
-                        System.out.println(quote1);
+                        accounts.register();
+                        accounts.getUsers().get(1).setWallet(new Wallet(10.0, 10.0,
+                                10.0, null, null));
+                        accounts.getUsers().get(1).getWallet().setEquitiesOwned();
                         break;
                     case 3:
-                        System.out.println(user1);
+                        System.out.println(quote.toString());
                         break;
                     case 4:
-                        accounts.register();
+                        System.out.println(accounts.getUsers().get(1));
                         break;
                     case 5:
+                        System.out.println(accounts.getUsers().get(1).getWallet().getEquitiesOwned().toString());
+                        System.out.println(accounts.getUsers().get(1).getWallet().getTransactionsHistory().toString());
+                        Purchase p = Purchase.builder()
+                                .equityHolding(quote)
+                                .amount(3.0)
+                                .timestamp((long)10)
+                                .wallet(user1.getWallet())
+                                .build();
+                        p.performTransaction(symbol1);
+                        System.out.println(accounts.getUsers().get(1).getWallet().getEquitiesOwned().toString());
+                        System.out.println(accounts.getUsers().get(1).getWallet().getTransactionsHistory().toString());
+                        break;
+                    case 6:
+                        System.out.println(accounts.getUsers().get(1).getWallet().getEquitiesOwned().toString());
+                        System.out.println(accounts.getUsers().get(1).getWallet().getTransactionsHistory().toString());
+                        Sell s = Sell.builder()
+                                .equityHolding(quote)
+                                .amount(2.0)
+                                .timestamp((long)11)
+                                .wallet(user1.getWallet())
+                                .build();
+                        s.performTransaction(symbol1);
+                        System.out.println(accounts.getUsers().get(1).getWallet().getEquitiesOwned().toString());
+                        System.out.println(accounts.getUsers().get(1).getWallet().getTransactionsHistory().toString());
+                        break;
+                    case 7:
+                        accounts.getUsers().get(1).setName("Monika");
+                        break;
+                    case 8:
+                        user2 = accounts.getUsers().get(1).clone();
+                        break;
+                    case 9:
+                        System.out.println(accounts.getUsers().get(1));
+                        System.out.println(user2);
+                        System.exit(0); // Terminate the program
+                        break;
+                    case 10:
                         System.out.println("Exiting Stock Master. Goodbye!");
                         System.exit(0); // Terminate the program
                         break;
