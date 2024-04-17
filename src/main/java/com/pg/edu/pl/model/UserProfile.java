@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
+import java.util.Comparator;
 import java.util.Objects;
 
 
@@ -12,7 +13,7 @@ import java.util.Objects;
  * */
 @Setter
 @Getter
-public class UserProfile extends Account implements Cloneable, Comparable<UserProfile> {
+public class UserProfile extends Account implements Cloneable, Comparable<UserProfile>, Comparator<UserProfile> {
     /** Color of the user's profile picture */
     private Color profileBackground;
     private String name;
@@ -37,13 +38,6 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
         this.profileBackground = null;
         this.name = name;
         this.surname = surname;
-    }
-
-    protected UserProfile (String password, String login) {
-        super(null, login, password);
-        this.profileBackground = null;
-        this.name = null;
-        this.surname = null;
     }
 
     // Override toString method to print the object
@@ -72,6 +66,11 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
 
     @Override
     public int compareTo(UserProfile o) {
-         return this.getPassword().compareTo(o.getPassword()) + this.getLogin().compareTo(o.getLogin());
+         return this.toString().compareTo(o.toString());
+    }
+
+    @Override
+    public int compare(UserProfile o1, UserProfile o2) {
+        return o1.getWallet().getCredit().compareTo(o2.getWallet().getCredit());
     }
 }

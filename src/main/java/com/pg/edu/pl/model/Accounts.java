@@ -24,7 +24,7 @@ public class Accounts {
 
     private UserProfile findUserAccount(String username, String password) {
         for (UserProfile userProfile : users) {
-            if (userProfile.compareTo(new UserProfile(username, password)) == 0)
+            if (userProfile.getLogin().equals(username) && userProfile.getPassword().equals(password))
                 return userProfile;
         }
         return null;
