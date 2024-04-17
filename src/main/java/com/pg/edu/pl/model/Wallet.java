@@ -1,6 +1,7 @@
 package com.pg.edu.pl.model;
 
 
+import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
