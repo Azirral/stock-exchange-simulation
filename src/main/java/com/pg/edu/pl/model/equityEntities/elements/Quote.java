@@ -14,7 +14,7 @@ import java.util.Comparator;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class Quote extends EquityHolding implements Comparable<Quote> {
+public class Quote extends EquityHolding implements Comparable<EquityHolding> {
     /** The stock associated with this quote. */
     private Stock stock;
 
@@ -33,7 +33,7 @@ public class Quote extends EquityHolding implements Comparable<Quote> {
      * @return A negative integer, zero, or a positive integer as this quote is less than, equal to, or greater than the specified quote.
      */
     @Override
-    public int compareTo(Quote o) {
+    public int compareTo(EquityHolding o) {
         return this.toString().compareTo(o.toString());
     }
 }

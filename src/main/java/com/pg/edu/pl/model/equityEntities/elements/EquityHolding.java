@@ -13,7 +13,7 @@ import java.util.Comparator;
 @Getter
 @Setter
 @ToString
-public abstract class EquityHolding {
+public abstract class EquityHolding implements Comparable<EquityHolding> {
     /**
      * The price of the equity.
      */
@@ -87,4 +87,14 @@ public abstract class EquityHolding {
 
     /** Time of registered screening of equity. */
     private Long timestamp;
+
+    /**
+     * Compares this EquityHolding object with another EquityHolding object based on their string representations.
+     * @param o The other EquityHolding object to compare to.
+     * @return A negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.
+     */
+    @Override
+    public int compareTo(EquityHolding o) {
+        return this.toString().compareTo(o.toString());
+    }
 }
