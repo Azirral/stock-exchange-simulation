@@ -25,7 +25,7 @@ public class Wallet implements Cloneable{
     /** Amount of money user has gained/lost since last sale/purchase */
     private Double lastSaleValue;
     /** Map of all equities and amount of them user has */
-    private Map<EquityHolding, Double> equitiesOwned;
+    private Map<Symbol, Double> equitiesOwned;
     /** History of all transactions made by the user */
     private ArrayList<Transaction> transactionsHistory;
 
@@ -34,8 +34,8 @@ public class Wallet implements Cloneable{
      * @param equity The equity holding to find in the equitiesOwned map.
      * @return The map entry representing the found equity holding if it exists, or null if not found.
      */
-    public Map.Entry<EquityHolding, Double> findEquityHolding(EquityHolding equity) {
-        for (Map.Entry<EquityHolding,Double> entry : this.equitiesOwned.entrySet()) {
+    public Map.Entry<Symbol, Double> findEquityHolding(Symbol equity) {
+        for (Map.Entry<Symbol,Double> entry : this.equitiesOwned.entrySet()) {
             if (entry.getKey().compareTo(equity) == 0)
                 return entry;
         }
@@ -48,13 +48,14 @@ public class Wallet implements Cloneable{
      * @param equitiesOwned A map containing equity holdings as keys and their corresponding quantities as values.
      * @return The total value of equities owned by the user in USD.
      */
-    public Double calculateExchangesValue(Map<EquityHolding, Double> equitiesOwned) {
-        double totalValueOwned = 0;
-        for (Map.Entry<EquityHolding,Double> entry : equitiesOwned.entrySet()) {
-            totalValueOwned += (entry.getKey().getPrice() * entry.getValue());
-        }
-        return totalValueOwned;
-    }
+    //TODO next version
+//    public Double calculateExchangesValue(Map<Symbol, Double> equitiesOwned) {
+//        double totalValueOwned = 0;
+//        for (Map.Entry<Symbol,Double> entry : equitiesOwned.entrySet()) {
+//            totalValueOwned += (getvalue() * entry.getValue());
+//        }
+//        return totalValueOwned;
+//    }
 
 
     /**

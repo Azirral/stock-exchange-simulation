@@ -12,7 +12,7 @@ import lombok.*;
 @Data
 @ToString(callSuper = true)
 @Builder
-public class Crypto extends Symbol implements Comparable<Crypto>{
+public class Crypto extends Symbol implements Comparable<Symbol>{
     /** The currency in which the cryptocurrency is traded. */
     private String currency;
 
@@ -25,7 +25,7 @@ public class Crypto extends Symbol implements Comparable<Crypto>{
      * @return A negative integer, zero, or a positive integer as this cryptocurrency is less than, equal to, or greater than the specified cryptocurrency.
      */
     @Override
-    public int compareTo(Crypto o) {
+    public int compareTo(Symbol o) {
         return this.toString().compareTo(o.toString());
     }
 

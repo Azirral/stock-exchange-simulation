@@ -1,6 +1,6 @@
 package com.pg.edu.pl.model;
 
-import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
+import com.pg.edu.pl.model.equityEntities.elements.Symbol;
 
 /**
  * Purchase class is a subclass of abstract class Transaction. It is responsible for
@@ -9,7 +9,7 @@ import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 
 public class Purchase extends Transaction {
 
-    public Purchase(EquityHolding equityHolding, Double amount, Long timestamp, Wallet wallet) {
+    public Purchase(Symbol equityHolding, Double amount, Long timestamp, Wallet wallet) {
         super(equityHolding, amount, timestamp, wallet);
     }
 
