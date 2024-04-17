@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -24,6 +25,8 @@ public class Wallet implements Cloneable{
     private Double lastSaleValue;
     /** Map of all equities and amount of them user has */
     private Map<EquityHolding, Double> equitiesOwned;
+    /** History of all transactions made by the user */
+    private ArrayList<Transaction> transactionsHistory;
 
     /** Method responsible for finding a given equity in equitiesOwned */
     public Map.Entry<EquityHolding, Double> findEquityHolding(String equitySymbol) {
@@ -41,6 +44,14 @@ public class Wallet implements Cloneable{
             totalValueOwned += (entry.getKey().getPrice() * entry.getValue());
         }
         return totalValueOwned;
+    }
+
+    private Transaction findTransactionInHistory(Long timestamp) {
+        for (Transaction transaction : transactionsHistory) {
+            if(transaction.getTimestamp().equals(timestamp))
+                return transaction;
+        }
+        return null;
     }
 
     @Override
