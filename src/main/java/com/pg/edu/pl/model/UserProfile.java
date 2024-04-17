@@ -21,23 +21,25 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
     /** User's wallet in which user's stocks and credit are kept*/
     private Wallet wallet;
 
-    protected UserProfile(Color profileBackground, String name, String surname,
+    protected UserProfile(Wallet wallet, Color profileBackground, String name, String surname,
                           String login, String password, String email) {
         super(login, password, email);
         this.profileBackground = profileBackground;
         this.name = name;
         this.surname = surname;
+        this.wallet = wallet;
     }
 
     /**
      * Constructor for users that dont want to choose the background color
      * */
-    protected UserProfile(String name, String surname,
+    protected UserProfile(Wallet wallet, String name, String surname,
                           String login, String password, String email) {
         super(email, login, password);
         this.profileBackground = null;
         this.name = name;
         this.surname = surname;
+        this.wallet = wallet;
     }
 
     /**

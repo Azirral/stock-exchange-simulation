@@ -42,6 +42,7 @@ public class Purchase extends Transaction {
             this.getWallet().getEquitiesOwned().computeIfPresent(entry.getKey(), (k, v) -> v + this.getAmount());
         }
         else {
+            Map<Symbol, Double> map;
             this.getWallet().getEquitiesOwned().put(symbol, this.getAmount());
         }
         this.getWallet().getTransactionsHistory().add(this);

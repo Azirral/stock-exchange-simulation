@@ -23,15 +23,13 @@ public class AppModule {
         System.out.println("6. Sell");
         System.out.println("7. Change name");
         System.out.println("8. Save profile");
-        System.out.println("9. Exit");
+        System.out.println("9. Print users");
+        System.out.println("10. Update");
+        System.out.println("11. Exit");
     }
     public static void runApplication() {
         Accounts accounts = new Accounts(new ArrayList<UserProfile>());
-        UserProfile user1 = new UserProfile(ProfileColor.AZURE.getProfileColor()
-                , "Jan", "Ludwicki", "janekludwicki",
-                "qwerty", "halo@wp.pl");
         UserProfile user2 = null;
-        accounts.getUsers().add(user1);
         Quote quote = Quote.builder()
                 .price(145.775)
                 .changesPercentage(0.32)
@@ -79,52 +77,49 @@ public class AppModule {
                         break;
                     case 2:
                         accounts.register();
-                        accounts.getUsers().get(1).setWallet(new Wallet(10.0, 10.0,
-                                10.0, null, null));
-                        accounts.getUsers().get(1).getWallet().setEquitiesOwned();
                         break;
                     case 3:
                         System.out.println(quote.toString());
                         break;
                     case 4:
-                        System.out.println(accounts.getUsers().get(1));
+                        System.out.println(accounts.getUsers().get(0));
                         break;
                     case 5:
-                        System.out.println(accounts.getUsers().get(1).getWallet().getEquitiesOwned().toString());
-                        System.out.println(accounts.getUsers().get(1).getWallet().getTransactionsHistory().toString());
+                        System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
+                        if(accounts.getUsers().get(0).getWallet().getTransactionsHistory()!=null)
+                        System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         Purchase p = Purchase.builder()
                                 .equityHolding(quote)
                                 .amount(3.0)
                                 .timestamp((long)10)
-                                .wallet(user1.getWallet())
+                                .wallet(accounts.getUsers().get(0).getWallet())
                                 .build();
                         p.performTransaction(symbol1);
-                        System.out.println(accounts.getUsers().get(1).getWallet().getEquitiesOwned().toString());
-                        System.out.println(accounts.getUsers().get(1).getWallet().getTransactionsHistory().toString());
+                        System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
+                        System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         break;
                     case 6:
-                        System.out.println(accounts.getUsers().get(1).getWallet().getEquitiesOwned().toString());
-                        System.out.println(accounts.getUsers().get(1).getWallet().getTransactionsHistory().toString());
+                        System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
+                        System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         Sell s = Sell.builder()
                                 .equityHolding(quote)
                                 .amount(2.0)
                                 .timestamp((long)11)
-                                .wallet(user1.getWallet())
+                                .wallet(accounts.getUsers().get(0).getWallet())
                                 .build();
                         s.performTransaction(symbol1);
-                        System.out.println(accounts.getUsers().get(1).getWallet().getEquitiesOwned().toString());
-                        System.out.println(accounts.getUsers().get(1).getWallet().getTransactionsHistory().toString());
+                        System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
+                        System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         break;
                     case 7:
-                        accounts.getUsers().get(1).setName("Monika");
+                        accounts.getUsers().get(0).setName("Monika");
                         break;
                     case 8:
-                        user2 = accounts.getUsers().get(1).clone();
+                        user2 = accounts.getUsers().get(0).clone();
                         break;
                     case 9:
-                        System.out.println(accounts.getUsers().get(1));
+                        System.out.println(accounts.getUsers().get(0));
                         System.out.println(user2);
-                        System.exit(0); // Terminate the program
                         break;
                     case 10:
                         System.out.println("Exiting Stock Master. Goodbye!");

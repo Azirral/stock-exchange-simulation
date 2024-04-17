@@ -4,16 +4,19 @@ package com.pg.edu.pl.model;
 import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Wallet class is responsible that resembles user's wallet and
  * equities he has in it
  */
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,7 +28,7 @@ public class Wallet implements Cloneable{
     /** Amount of money user has gained/lost since last sale/purchase */
     private Double lastSaleValue;
     /** Map of all equities and amount of them user has */
-    private Map<Symbol, Double> equitiesOwned;
+    private HashMap<Symbol, Double> equitiesOwned;
     /** History of all transactions made by the user */
     private ArrayList<Transaction> transactionsHistory;
 
@@ -41,21 +44,6 @@ public class Wallet implements Cloneable{
         }
         return null;
     }
-
-
-    /**
-     * Method responsible for calculating the total value of equities owned in USD by the user.
-     * @param equitiesOwned A map containing equity holdings as keys and their corresponding quantities as values.
-     * @return The total value of equities owned by the user in USD.
-     */
-    //TODO next version
-//    public Double calculateExchangesValue(Map<Symbol, Double> equitiesOwned) {
-//        double totalValueOwned = 0;
-//        for (Map.Entry<Symbol,Double> entry : equitiesOwned.entrySet()) {
-//            totalValueOwned += (getvalue() * entry.getValue());
-//        }
-//        return totalValueOwned;
-//    }
 
 
     /**
