@@ -3,6 +3,7 @@ package com.pg.edu.pl.model;
 import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Comparator;
 
@@ -15,6 +16,7 @@ import java.util.Comparator;
 @Getter
 @Setter
 @AllArgsConstructor
+@SuperBuilder
 public abstract class Transaction implements Comparable<Transaction>, Comparator<Transaction> {
     /** instance of equity holding on which the transaction will be performed */
     private EquityHolding equityHolding;

@@ -1,6 +1,7 @@
 package com.pg.edu.pl.model.equityEntities.elements;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Comparator;
 
@@ -9,7 +10,7 @@ import java.util.Comparator;
  * for Stock and Crypto classes that inherit from it.
  */
 @Data
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @ToString

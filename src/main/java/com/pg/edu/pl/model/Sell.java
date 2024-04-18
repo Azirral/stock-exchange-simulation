@@ -2,7 +2,7 @@ package com.pg.edu.pl.model;
 
 import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
+import lombok.experimental.SuperBuilder;
 
 import java.sql.SQLOutput;
 import java.util.Map;
@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
  * updating users wallet after sell transaction has been made.
  */
 
+@SuperBuilder
 public class Sell extends Transaction {
 
     /**

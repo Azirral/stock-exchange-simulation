@@ -3,6 +3,7 @@ package com.pg.edu.pl.model;
 
 import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  * Purchase class is a subclass of abstract class Transaction. It is responsible for
  * updating users wallet after purchase transaction has been made.
  */
-
+@SuperBuilder
 public class Purchase extends Transaction {
 
     /**
@@ -41,6 +42,7 @@ public class Purchase extends Transaction {
             this.getWallet().getEquitiesOwned().computeIfPresent(entry.getKey(), (k, v) -> v + this.getAmount());
         }
         else {
+            Map<Symbol, Double> map;
             this.getWallet().getEquitiesOwned().put(symbol, this.getAmount());
         }
         this.getWallet().getTransactionsHistory().add(this);

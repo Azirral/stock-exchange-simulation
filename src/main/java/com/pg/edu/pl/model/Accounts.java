@@ -1,13 +1,12 @@
 package com.pg.edu.pl.model;
 
+import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 @Getter
 @Setter
@@ -143,8 +142,15 @@ public class Accounts {
                 profileBackground = ProfileColor.RED.getProfileColor();
                 break;
         }
+        Wallet wallet = Wallet.builder()
+                .credit(100.0)
+                .exchangeValue(10.0)
+                .lastSaleValue(10.0)
+                .equitiesOwned(new HashMap<>())
+                .transactionsHistory(new ArrayList<>())
+                .build();
         if (profileBackground == null)
-            return new UserProfile(name, surname, login, password, email);
-        return new UserProfile(profileBackground, name, surname, login, password, email);
+            return new UserProfile(wallet, name, surname, login, password, email);
+        return new UserProfile(wallet, profileBackground, name, surname, login, password, email);
     }
 }
