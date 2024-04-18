@@ -1,10 +1,11 @@
 package com.pg.edu.pl;
 
 
-import com.pg.edu.pl.classes.AppModule;
+import com.pg.edu.pl.model.AppModule;
 
 public class Main {
     public static void main(String[] args){
-        AppModule.runApplication();
+        AppModule app = new AppModule();
+        app.runApplication();
   }
 }
