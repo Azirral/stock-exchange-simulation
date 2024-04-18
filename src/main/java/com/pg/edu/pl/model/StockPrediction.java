@@ -6,18 +6,35 @@ import lombok.Setter;
 
 import java.util.Date;
 
-// StockPrediction class is a subclass of Prediction that resembles prediction for stock price
+/**
+ * Represents a prediction for stock price.
+ * Inherits from Prediction class.
+ */
 @Getter
 @Setter
 public class StockPrediction extends Prediction {
+
     // Stock for which we are predicting the price
     private Quote quote;
 
+    /**
+     * Constructor for StockPrediction class.
+     * @param name The name of the prediction.
+     * @param description Description of the prediction.
+     * @param predictedPrice The predicted price.
+     * @param accuracy The accuracy of the prediction.
+     * @param log_date The date of the prediction.
+     * @param quote The Quote object.
+     */
     public StockPrediction(String name, String description, Double predictedPrice, Double accuracy, Date log_date, Quote quote) {
         super(name, description, predictedPrice, accuracy, log_date);
         this.quote = quote;
     }
 
+    /**
+     * Method to predict stock price.
+     * Overrides the predict() method of the Prediction class.
+     */
     @Override
     public void predict() {
         // Simple prediction algorithm: using previous day's closing price as the predicted price for the next day
