@@ -17,7 +17,7 @@ public class AppModule {
     private UserProfile user;
     private Accounts accounts;
     private void dataInit() {
-        this.accounts = new Accounts(new ArrayList<UserProfile>());
+        this.accounts = new Accounts(new ArrayList<>());
         this.user = null;
         this.quote = Quote.builder()
                 .price(145.775)
