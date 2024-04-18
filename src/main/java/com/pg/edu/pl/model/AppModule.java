@@ -4,13 +4,21 @@ import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
 import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+@Getter
+@Setter
 public class AppModule {
-
+    private Quote quote;
+    private Quotes quotes;
+    private Stock symbol;
+    private UserProfile user;
+    private Accounts accounts;
 
     public static void printMainMenu() {
         System.out.println("Welcome to Stock Master - Your Ultimate Stock Simulation Experience!\n");
@@ -28,10 +36,10 @@ public class AppModule {
         System.out.println("11. Print wallets");
         System.out.println("12. Exit");
     }
-    public static void runApplication() {
-        Accounts accounts = new Accounts(new ArrayList<UserProfile>());
-        UserProfile user2 = null;
-        Quote quote = Quote.builder()
+    private void dataInit(){
+        this.getAccounts() = new Accounts(new ArrayList<UserProfile>());
+        this.getUser() = null;
+        this.getQuote() = Quote.builder()
                 .price(145.775)
                 .changesPercentage(0.32)
                 .change(0.465)
@@ -53,13 +61,16 @@ public class AppModule {
                 .timestamp(1677790773L)
                 .stock(null) // Set the Stock object
                 .build();
-        Quotes quotes = Quotes.builder().quote(quote).build();
-        Stock symbol1 = Stock.builder()
+        this.getQuotes() = Quotes.builder().quote(quote).build();
+        this.getSymbol() = Stock.builder()
                 .symbol("AAACX")
                 .name("American Beacon Balanced Fund R5 Class")
                 .stockExchange("NASDAQ")
                 .quotes(quotes)
                 .build();
+    }
+    public static void runApplication() {
+        dataInit();
         Scanner scanner = new Scanner(System.in);
         try {
             while (true) {
