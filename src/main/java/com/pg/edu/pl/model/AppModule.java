@@ -5,12 +5,9 @@ import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
 import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class AppModule {
-
 
     public static void printMainMenu() {
         System.out.println("Welcome to Stock Master - Your Ultimate Stock Simulation Experience!\n");
@@ -28,38 +25,10 @@ public class AppModule {
         System.out.println("11. Print wallets");
         System.out.println("12. Exit");
     }
-    public static void runApplication() {
-        Accounts accounts = new Accounts(new ArrayList<UserProfile>());
-        UserProfile user2 = null;
-        Quote quote = Quote.builder()
-                .price(145.775)
-                .changesPercentage(0.32)
-                .change(0.465)
-                .dayLow(143.9)
-                .dayHigh(146.71)
-                .yearHigh(179.61)
-                .yearLow(124.17)
-                .marketCap(2306437439846L)
-                .priceAvg50(140.8724)
-                .priceAvg200(147.18594)
-                .volume(42478176L)
-                .avgVolume(73638864L)
-                .open(144.38)
-                .previousClose(145.31)
-                .eps(5.89)
-                .pe(24.75)
-                .earningsAnnouncement("2023-04-26T10:59:00.000+0000")
-                .sharesOutstanding(15821899776L)
-                .timestamp(1677790773L)
-                .stock(null) // Set the Stock object
-                .build();
-        Quotes quotes = Quotes.builder().quote(quote).build();
-        Stock symbol1 = Stock.builder()
-                .symbol("AAACX")
-                .name("American Beacon Balanced Fund R5 Class")
-                .stockExchange("NASDAQ")
-                .quotes(quotes)
-                .build();
+
+
+
+    public static void runMenu() {
         Scanner scanner = new Scanner(System.in);
         try {
             while (true) {
@@ -67,9 +36,8 @@ public class AppModule {
                 System.out.print("\nEnter your choice: ");
                 String input = scanner.nextLine();
                 if (input.trim().isEmpty()) {
-                    // Handle case where only Enter key was pressed
                     System.out.println("Invalid input. Please enter a number between 1 and 6.");
-                    continue; // Restart the loop
+                    continue;
                 }
                 int choice = Integer.parseInt(input.trim());
                 switch (choice) {
@@ -88,14 +56,14 @@ public class AppModule {
                     case 5:
                         System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
                         if(accounts.getUsers().get(0).getWallet().getTransactionsHistory()!=null)
-                        System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
+                            System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         Purchase p = Purchase.builder()
                                 .equityHolding(quote)
                                 .amount(3.0)
                                 .timestamp((long)10)
                                 .wallet(accounts.getUsers().get(0).getWallet())
                                 .build();
-                        p.performTransaction(symbol1);
+                        p.performTransaction(symbol);
                         System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
                         System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         break;
@@ -108,7 +76,7 @@ public class AppModule {
                                 .timestamp((long)11)
                                 .wallet(accounts.getUsers().get(0).getWallet())
                                 .build();
-                        s.performTransaction(symbol1);
+                        s.performTransaction(symbol);
                         System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
                         System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         break;
@@ -116,33 +84,35 @@ public class AppModule {
                         accounts.getUsers().get(0).setName("Monika");
                         break;
                     case 8:
-                        user2 = accounts.getUsers().get(0).clone();
+                        user = accounts.getUsers().get(0).clone();
                         break;
                     case 9:
                         System.out.println(accounts.getUsers().get(0));
-                        System.out.println(user2);
+                        System.out.println(accounts.getUsers().get(0));
                         break;
                     case 10:
-                        user2.getWallet().setCredit(10.0);
+                        user.getWallet().setCredit(10.0);
                         System.out.println("Credits were added successfully");
                     case 11:
                         System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
-                        System.out.println("user2 wallet: " + user2.getWallet().getCredit());
+                        System.out.println("user2 wallet: " + user.getWallet().getCredit());
                         break;
                     case 12:
                         System.out.println("Exiting Stock Master. Goodbye!");
-                        System.exit(0); // Terminate the program
+                        System.exit(0);
                         break;
                     default:
                         System.out.println("Invalid choice. Please enter a number between 1 and 6.");
                 }
             }
         } catch(NoSuchElementException e){
-                System.out.println("Input not available. Please provide valid input.");
-                // Consume the invalid input to prevent an infinite loop
-                scanner.next();
-            } finally{
-                scanner.close(); // Close the scanner after the loop
-            }
+            System.out.println("Input not available. Please provide valid input.");
+            scanner.next();
+        } finally{
+            scanner.close();
+        }
+    }
+    public static void runApplication() {
+        runMenu();
         }
 }
