@@ -109,7 +109,7 @@ public class AppModule {
                         user = accounts.getUsers().get(0).clone();
                         break;
                     case 9:
-                        System.out.println(accounts.getUsers().get(0));
+                        System.out.println(user);
                         System.out.println(accounts.getUsers().get(0));
                         break;
                     case 10:
