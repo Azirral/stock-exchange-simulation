@@ -128,6 +128,7 @@ public class AppModule {
                     case 11:
                         System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
                         System.out.println("user2 wallet: " + user2.getWallet().getCredit());
+                        break;
                     case 12:
                         System.out.println("Exiting Stock Master. Goodbye!");
                         System.exit(0); // Terminate the program
