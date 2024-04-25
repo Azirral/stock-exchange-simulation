@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class StockPrediction extends Prediction {
+public class QuotePrediction extends Prediction {
 
     // Stock for which we are predicting the price
     private Quote quote;
@@ -26,7 +26,7 @@ public class StockPrediction extends Prediction {
      * @param log_date The date of the prediction.
      * @param quote The Quote object.
      */
-    public StockPrediction(String name, String description, Double predictedPrice, Double accuracy, Date log_date, Quote quote) {
+    public QuotePrediction(String name, String description, Double predictedPrice, Double accuracy, Date log_date, Quote quote) {
         super(name, description, predictedPrice, accuracy, log_date);
         this.quote = quote;
     }
