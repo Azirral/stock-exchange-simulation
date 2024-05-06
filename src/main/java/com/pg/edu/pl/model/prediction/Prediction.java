@@ -1,4 +1,4 @@
-package com.pg.edu.pl.model;
+package com.pg.edu.pl.model.prediction;
 
 import lombok.*;
 
