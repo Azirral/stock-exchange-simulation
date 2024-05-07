@@ -3,6 +3,7 @@ import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import com.pg.edu.pl.model.equityEntities.categories.collections.Cryptos;
 import com.pg.edu.pl.model.equityEntities.categories.collections.Stocks;
+import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,5 +37,31 @@ public class CSVLoader {
         }
         br.close();
         return Stocks.builder().stocks(stocksList).build();
+    }
+
+    public Quotes loadQuotesFromCSV(String filePath) throws IOException {
+        List<Stock> stocksList = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            stocksList.add(Stock.builder().symbol(values[0]).name(values[1]).
+                    stockExchange(values[2]).build());
+        }
+        br.close();
+        return Quotes.builder().stocks(stocksList).build(); //TODO
+    }
+
+    public Cryptos loadCryptosFromCSV(String filePath) throws IOException {
+        List<Stock> stocksList = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            stocksList.add(Stock.builder().symbol(values[0]).name(values[1]).
+                    stockExchange(values[2]).build());
+        }
+        br.close();
+        return Quotes.builder().stocks(stocksList).build(); //TODO
     }
 }
