@@ -17,7 +17,7 @@ import java.util.Date;
 @ToString
 public abstract class EquityHolding implements Comparable<EquityHolding> {
     /**Date of registered screening of equity */
-    private Date date;
+    private String date;
 
     /** First price an equity trades at when the market opens. */
     private Double open;

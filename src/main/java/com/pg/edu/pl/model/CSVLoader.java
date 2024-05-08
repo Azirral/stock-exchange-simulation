@@ -3,6 +3,9 @@ import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import com.pg.edu.pl.model.equityEntities.categories.collections.Cryptos;
 import com.pg.edu.pl.model.equityEntities.categories.collections.Stocks;
+import com.pg.edu.pl.model.equityEntities.elements.CryptoQuote;
+import com.pg.edu.pl.model.equityEntities.elements.Quote;
+import com.pg.edu.pl.model.equityEntities.elements.collections.CryptoQuotes;
 import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
 
 import java.io.BufferedReader;
@@ -40,28 +43,30 @@ public class CSVLoader {
     }
 
     public Quotes loadQuotesFromCSV(String filePath) throws IOException {
-        List<Stock> stocksList = new ArrayList<>();
+        List<Quote> quoteList = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line;
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
-            stocksList.add(Stock.builder().symbol(values[0]).name(values[1]).
-                    stockExchange(values[2]).build());
+            quoteList.add(Quote.builder().date(values[0]).open(Double.valueOf(values[1])).
+                    low(Double.valueOf(values[2])).high(Double.valueOf(values[3])).close(Double.valueOf(values[4]))
+                    .volume(Long.valueOf(values[5])).symbol(values[6]).stock(null).build());
         }
         br.close();
-        return Quotes.builder().stocks(stocksList).build(); //TODO
+        return Quotes.builder().quotes(quoteList).build();
     }
 
-    public Cryptos loadCryptosFromCSV(String filePath) throws IOException {
-        List<Stock> stocksList = new ArrayList<>();
+    public CryptoQuotes loadCryptoQuotesFromCSV(String filePath) throws IOException {
+        List<CryptoQuote> cryptoQuoteList = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line;
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
-            stocksList.add(Stock.builder().symbol(values[0]).name(values[1]).
-                    stockExchange(values[2]).build());
+            cryptoQuoteList.add(CryptoQuote.builder().date(values[0]).open(Double.valueOf(values[1])).
+                    low(Double.valueOf(values[2])).high(Double.valueOf(values[3])).close(Double.valueOf(values[4]))
+                    .volume(Long.valueOf(values[5])).symbol(values[6]).crypto(null).currency(values[7]).build());
         }
         br.close();
-        return Quotes.builder().stocks(stocksList).build(); //TODO
+        return CryptoQuotes.builder().cryptoQuotes(cryptoQuoteList).build();
     }
 }
