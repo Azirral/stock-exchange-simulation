@@ -12,11 +12,13 @@ import lombok.Setter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Getter
 @Setter
 public class AppModule {
-    private Stocks stocks;
+    private static Stocks stocks;
     private Cryptos cryptos;
     private Quotes bajaj_auto;
     private Quotes cipla;
@@ -143,20 +145,15 @@ public class AppModule {
                         System.out.println(duration);
                         break;
                     case 12:
-                        long start_ = System.currentTimeMillis();
-                        for (Stock stock : stocks.getStocks()) {
-                            if (stock.getQuotes() != null) {
-                                StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
-
-                                predictor.predict_linear();
-                                predictor.predict_polynomial();
-                            }
-                        }
-                        long end_ = System.currentTimeMillis();
-                        long duration_ = end_-start_;
-                        System.out.println(duration_);
+                        threading(2);
                         break;
                     case 13:
+                        threading(3);
+                        break;
+                    case 14:
+                        threading(4);
+                        break;
+                    case 15:
                         System.out.println("Exiting Stock Master. Goodbye!");
                         System.exit(0);
                         break;
@@ -187,8 +184,58 @@ public class AppModule {
         System.out.println("9. Print users");
         System.out.println("10. Print wallets");
         System.out.println("11. Sequential prediction");
-        System.out.println("12. parallel prediction");
-        System.out.println("13. Exit");
+        System.out.println("12. parallel prediction on 2 threads");
+        System.out.println("13. parallel prediction on 3 threads");
+        System.out.println("14. parallel prediction on 4 threads");
+        System.out.println("15. Exit");
+    }
+
+    public static void threading(int threads) {
+        ExecutorService executor = Executors.newFixedThreadPool(threads);
+        long start_ = System.currentTimeMillis();
+        for (Stock stock : stocks.getStocks()) {
+            if (stock.getQuotes() != null) {
+                StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
+
+                Thread linearPredictionThread = new Thread(() -> {
+                    long startThread = System.currentTimeMillis();
+                    try {
+                        predictor.predict_linear();
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                    long endThread = System.currentTimeMillis();
+                    System.out.println("Linear prediction time: " + (endThread - startThread) + "ms");
+                });
+
+                Thread polynomialPredictionThread = new Thread(() -> {
+                    long startThread = System.currentTimeMillis();
+                    try {
+                        predictor.predict_polynomial();
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                    long endThread = System.currentTimeMillis();
+                    System.out.println("Polynomial prediction time: " + (endThread - startThread) + "ms");
+                });
+
+                // Start the threads
+                linearPredictionThread.start();
+                polynomialPredictionThread.start();
+
+                // Wait for threads to finish
+                try {
+                    linearPredictionThread.join();
+                    polynomialPredictionThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        long end_ = System.currentTimeMillis();
+        long duration_ = end_-start_;
+        System.out.println(duration_);
+        executor.shutdown();
     }
 
     public void runApplication() {
