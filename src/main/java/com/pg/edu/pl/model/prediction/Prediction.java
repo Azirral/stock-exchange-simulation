@@ -9,9 +9,9 @@ import java.util.Date;
  * Prediction class is an abstract class that holds common variables
  * for StockPrediction and CryptoPrediction classes that inherit from it.
  */
-@Getter(AccessLevel.PROTECTED)
-@Setter(AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Setter
+@AllArgsConstructor()
 public abstract class Prediction {
     /**
      * Name of the method used for prediction
@@ -35,5 +35,7 @@ public abstract class Prediction {
      */
     private Date log_date;
 
-    public abstract void predict();
+    public abstract void predict_linear() throws Exception;
+
+    public abstract void predict_polynomial() throws Exception;
 }

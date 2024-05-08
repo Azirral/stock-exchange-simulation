@@ -1,16 +1,10 @@
 package com.pg.edu.pl.model.prediction;
 
+import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.apache.commons.math3.fitting.PolynomialCurveFitter;
+import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.ml.regression.RandomForestRegressor;
-import org.apache.spark.ml.regression.RandomForestRegressionModel;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
-
 import java.util.Date;
 import java.util.List;
 
@@ -42,40 +36,67 @@ public class StockPrediction extends Prediction {
      * Overrides the predict() method of the Prediction class.
      */
     @Override
-    public void predict() {
-        /** Initialize Spark */
-        SparkConf conf = new SparkConf().setAppName("PricePrediction").setMaster("local");
-        JavaSparkContext sc = new JavaSparkContext(conf);
-        SparkSession spark = SparkSession.builder().appName("PricePrediction").getOrCreate();
+    public void predict_linear() {
+        /** Get quotes from Stock object */
+        List<Quote> quotes = stockPredict.getQuotes().getQuotes();
 
-        /** Generate sample data (Replace this with your actual data loading) */
-        List<Quote> quoteList = stockPredict.getQuotes().getQuotes();
+        /** Perform linear regression */
+        SimpleRegression regression = new SimpleRegression();
+        /** Use timestamp as independent variable and price as dependent variable */
+        for (Quote quote : quotes) {
+            /** Use timestamp as independent variable and price as dependent variable */
+            regression.addData(quote.getTimestamp(), quote.getPrice());
+        }
 
-        /** Create RDD from the list */
-        JavaRDD<Quote> quoteRDD = sc.parallelize(quoteList);
+        /** Get slope and intercept of the regression line */
+        double slope = regression.getSlope();
+        double intercept = regression.getIntercept();
 
-        /** Convert RDD to DataFrame */
-        Dataset<Row> quoteDF = spark.createDataFrame(quoteRDD, Quote.class);
+        /** Predict the next price (assuming next timestamp is one day ahead) */
+        long nextTimestamp = System.currentTimeMillis() + 24 * 60 * 60 * 1000;
+        double nextPrice = slope * nextTimestamp + intercept;
 
-        /** Split the data into training and test sets (70% training and 30% testing) */
-        Dataset<Row>[] splits = quoteDF.randomSplit(new double[]{0.7, 0.3});
-        Dataset<Row> trainingData = splits[0];
-        Dataset<Row> testData = splits[1];
+        /** Set the predicted price */
+        setPredictedPrice(nextPrice);
 
-        /** Train a Random Forest regression model */
-        RandomForestRegressor rf = new RandomForestRegressor()
-                .setLabelCol("price")
-                .setFeaturesCol("timestamp")
-                .setNumTrees(100); /** Number of trees in the forest */
-        RandomForestRegressionModel rfModel = rf.fit(trainingData);
+        /** Print the predicted price */
+        System.out.println("Prediction for: " + stockPredict.getName());
+        System.out.println("Predicted price: " + nextPrice + " for " + nextTimestamp);
+    }
 
-        /** Make predictions on the test data */
-        Dataset<Row> predictions = rfModel.transform(testData);
+    /**
+     * Method to predict stock price using polynomial regression.
+     */
+    @Override
+    public void predict_polynomial() {
+        /** Get quotes from Stock object */
+        List<Quote> quotes = stockPredict.getQuotes().getQuotes();
 
-        /** Show the predicted prices */
-        predictions.show();
+        /** Perform polynomial regression */
+        WeightedObservedPoints points = new WeightedObservedPoints();
+        for (Quote quote : quotes) {
+            points.add(quote.getTimestamp(), quote.getPrice());
+        }
+        PolynomialCurveFitter fitter = PolynomialCurveFitter.create(2); // Quadratic polynomial
+        double[] coefficients = fitter.fit(points.toList());
 
-        /** Stop Spark */
-        spark.stop();
+        /** Predict the next price (assuming next predict_lineartimestamp is one day ahead) */
+        long nextTimestamp = System.currentTimeMillis() + 24 * 60 * 60 * 1000;
+        double nextPrice = evaluatePolynomial(coefficients, nextTimestamp);
+
+        /** Set the predicted price */
+        setPredictedPrice(nextPrice);
+
+        /** Print the predicted price */
+        System.out.println("Polynomial Regression Prediction for: " + stockPredict.getName());
+        System.out.println("Predicted price: " + nextPrice + " for " + new Date(nextTimestamp));
+    }
+
+    private double evaluatePolynomial(double[] coefficients, long timestamp) {
+        double result = 0.0;
+        for (int i = 0; i < coefficients.length; i++) {
+            result += coefficients[i] * Math.pow(timestamp, i);
+        }
+        return result;
     }
 }
