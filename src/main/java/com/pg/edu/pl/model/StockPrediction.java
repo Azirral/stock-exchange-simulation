@@ -38,9 +38,9 @@ public class StockPrediction extends Prediction {
     @Override
     public void predict() {
         // Simple prediction algorithm: using previous day's closing price as the predicted price for the next day
-        if (quote != null && quote.getPreviousClose() != null) { /** TODO change the way previous is checked based on data*/
+        if (quote != null && quote.getClose() != null) { /** TODO change the way previous is checked based on data*/
             // Assume predicted price is the same as previous day's closing price
-            setPredictedPrice(quote.getPreviousClose());    /** TODO change the way previous is checked based on data*/
+            setPredictedPrice(quote.getClose());    /** TODO change the way previous is checked based on data*/
         } else {
             // If stock data is not available, set predicted price to null
             setPredictedPrice(null);

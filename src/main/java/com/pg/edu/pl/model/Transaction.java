@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Comparator;
+import java.util.UUID;
 
 /**
  * Transaction class is an abstract class which holds common variables and abstract
@@ -18,6 +19,7 @@ import java.util.Comparator;
 @AllArgsConstructor
 @SuperBuilder
 public abstract class Transaction implements Comparable<Transaction>, Comparator<Transaction> {
+    private UUID uuid;
     /** instance of equity holding on which the transaction will be performed */
     private EquityHolding equityHolding;
     /** amount of the equity holding specified by the user */
@@ -53,4 +55,20 @@ public abstract class Transaction implements Comparable<Transaction>, Comparator
         return o1.getTimestamp().compareTo(o2.getTimestamp());
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "uuid=" + uuid +
+                ", equityHolding=" + equityHolding +
+                ", amount=" + amount +
+                ", timestamp=" + timestamp +
+                ", wallet=" + wallet +
+                '}';
+    }
+
+    public String toCSV() {
+        char flag = (this instanceof Sell) ? 's' : 'p';
+        return String.join("'", String.valueOf(flag), equityHolding.toCSV(), String.valueOf(uuid),
+                String.valueOf(amount),String.valueOf(timestamp), String.valueOf(wallet.getUuid()));
+    }
 }

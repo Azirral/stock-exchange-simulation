@@ -28,4 +28,13 @@ public class Cryptos implements Comparator<Crypto> {
     public int compare(Crypto o1, Crypto o2) {
         return o1.compareTo(o2);
     }
+
+
+    public Crypto findCrypto(String symbol) {
+        for (Crypto crypto : cryptos) {
+            if (crypto.getSymbol().equals(symbol))
+                return crypto;
+        }
+        return null;
+    }
 }

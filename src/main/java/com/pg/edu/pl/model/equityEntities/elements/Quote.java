@@ -35,4 +35,25 @@ public class Quote extends EquityHolding implements Comparable<EquityHolding> {
     public int compareTo(EquityHolding o) {
         return this.toString().compareTo(o.toString());
     }
+
+    @Override
+    public String toString() {
+        return "Quote{" +
+                "date='" + getDate() + '\'' +
+                ", open=" + getOpen() +
+                ", low=" + getLow() +
+                ", high=" + getHigh() +
+                ", close=" + getClose() +
+                ", volume=" + getVolume() +
+                ", symbol='" + getSymbol() + '\'' +
+                ", stock=" + stock +
+                '}';
+    }
+
+    @Override
+    public String toCSV() {
+        return String.join("~", "q",getDate(), String.valueOf(getOpen()),
+                String.valueOf(getLow()), String.valueOf(getHigh()), String.valueOf(getClose()),
+                String.valueOf(getVolume()), getSymbol(), String.valueOf(stock));
+    }
 }

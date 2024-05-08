@@ -36,9 +36,9 @@ public class CryptoPrediction extends Prediction {
     @Override
     public void predict() {
         // Simple prediction algorithm: assuming a 5% increase in price
-        if (cryptoQuote != null && cryptoQuote.getPrice() != null) {
+        if (cryptoQuote != null && cryptoQuote.getClose() != null) {
             // Assuming the price will increase by 5% from the current price
-            double predictedPrice = cryptoQuote.getPrice() * 1.05;
+            double predictedPrice = cryptoQuote.getClose() * 1.05;
             setPredictedPrice(predictedPrice);
         } else {
             // If crypto data is not available, set predicted price to null

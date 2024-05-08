@@ -29,4 +29,26 @@ public class CryptoQuote extends EquityHolding implements Comparable<EquityHoldi
     public int compareTo(EquityHolding o) {
         return this.toString().compareTo(o.toString());
     }
+
+    @Override
+    public String toString() {
+        return "CryptoQuote{" +
+                "date='" + getDate() + '\'' +
+                ", open=" + getOpen() +
+                ", low=" + getLow() +
+                ", high=" + getHigh() +
+                ", close=" + getClose() +
+                ", volume=" + getVolume() +
+                ", symbol='" + getSymbol() + '\'' +
+                ", crypto=" + crypto +
+                ", currency='" + currency + '\'' +
+                '}';
+    }
+
+    @Override
+    public String toCSV() {
+        return String.join("~", "c",getDate(), String.valueOf(getOpen()),
+                String.valueOf(getLow()), String.valueOf(getHigh()), String.valueOf(getClose()),
+                String.valueOf(getVolume()), getSymbol(), String.valueOf(crypto), String.valueOf(currency));
+    }
 }
