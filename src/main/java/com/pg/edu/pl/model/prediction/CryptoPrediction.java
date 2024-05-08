@@ -5,9 +5,10 @@ import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import com.pg.edu.pl.model.equityEntities.categories.Crypto;
-import java.util.Date;
 import java.util.List;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  * Represents a prediction for crypto price.
  * Inherits from Prediction class.
@@ -36,7 +37,7 @@ public class CryptoPrediction extends Prediction {
      * Overrides the predict() method of the Prediction class.
      */
     @Override
-    public void predict_linear() {
+    public void predict_linear() throws ParseException {
         /** Get quotes from Crypto object */
         List<CryptoQuote> quotes = cryptoPredict.getCryptoQuotes().getCryptoQuotes();
 
@@ -45,7 +46,7 @@ public class CryptoPrediction extends Prediction {
         /** Use timestamp as independent variable and price as dependent variable */
         for (CryptoQuote quote : quotes) {
             /** Use timestamp as independent variable and price as dependent variable */
-            regression.addData(quote.getTimestamp(), quote.getPrice());
+            regression.addData(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ"), quote.getClose());
         }
 
         /** Get slope and intercept of the regression line */
@@ -64,14 +65,15 @@ public class CryptoPrediction extends Prediction {
         System.out.println("Predicted price: " + nextPrice + " for " + nextTimestamp);
     }
     @Override
-    public void predict_polynomial() {
+    public void predict_polynomial() throws ParseException {
+
         /** Get quotes from Crypto object */
         List<CryptoQuote> quotes = cryptoPredict.getCryptoQuotes().getCryptoQuotes();
 
         /** Prepare data for polynomial regression */
         WeightedObservedPoints obs = new WeightedObservedPoints();
         for (CryptoQuote quote : quotes) {
-            obs.add(quote.getTimestamp(), quote.getPrice());
+            obs.add(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ") , quote.getClose());
         }
 
         /** Fit a polynomial curve to the data */
@@ -100,5 +102,12 @@ public class CryptoPrediction extends Prediction {
         double nextTimestampSquared = timestamp * timestamp;
         return coefficients[0] + coefficients[1] * timestamp + coefficients[2] * nextTimestampSquared;
     }
+
+    public static double stringDateToTimestamp(String dateString, String format) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        Date date = sdf.parse(dateString);
+        return (double) date.getTime();
+    }
+
 }
 

@@ -5,6 +5,9 @@ import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +39,7 @@ public class StockPrediction extends Prediction {
      * Overrides the predict() method of the Prediction class.
      */
     @Override
-    public void predict_linear() {
+    public void predict_linear() throws ParseException {
         /** Get quotes from Stock object */
         List<Quote> quotes = stockPredict.getQuotes().getQuotes();
 
@@ -45,7 +48,7 @@ public class StockPrediction extends Prediction {
         /** Use timestamp as independent variable and price as dependent variable */
         for (Quote quote : quotes) {
             /** Use timestamp as independent variable and price as dependent variable */
-            regression.addData(quote.getTimestamp(), quote.getPrice());
+            regression.addData(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ"), quote.getClose());
         }
 
         /** Get slope and intercept of the regression line */
@@ -68,14 +71,14 @@ public class StockPrediction extends Prediction {
      * Method to predict stock price using polynomial regression.
      */
     @Override
-    public void predict_polynomial() {
+    public void predict_polynomial() throws ParseException {
         /** Get quotes from Stock object */
         List<Quote> quotes = stockPredict.getQuotes().getQuotes();
 
         /** Perform polynomial regression */
         WeightedObservedPoints points = new WeightedObservedPoints();
         for (Quote quote : quotes) {
-            points.add(quote.getTimestamp(), quote.getPrice());
+            points.add(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ"), quote.getClose());
         }
         PolynomialCurveFitter fitter = PolynomialCurveFitter.create(2); // Quadratic polynomial
         double[] coefficients = fitter.fit(points.toList());
@@ -98,5 +101,11 @@ public class StockPrediction extends Prediction {
             result += coefficients[i] * Math.pow(timestamp, i);
         }
         return result;
+    }
+
+    public static double stringDateToTimestamp(String dateString, String format) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        Date date = sdf.parse(dateString);
+        return (double) date.getTime();
     }
 }
