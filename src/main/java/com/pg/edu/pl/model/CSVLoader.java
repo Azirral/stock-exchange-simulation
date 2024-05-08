@@ -30,12 +30,14 @@ public class CSVLoader {
     }
 
     public Stocks loadStocksFromCSV(String filePath) throws IOException {
-        List<Stock> stocksList = new ArrayList<>();
+        ArrayList<Stock> stocksList = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line;
+        br.readLine();
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
-            stocksList.add(Stock.builder().symbol(values[0]).name(values[1]).
+            if(values.length == 3 )
+                stocksList.add(Stock.builder().symbol(values[0]).name(values[1]).
                     stockExchange(values[2]).build());
         }
         br.close();
@@ -46,6 +48,7 @@ public class CSVLoader {
         List<Quote> quoteList = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line;
+        br.readLine();
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
             quoteList.add(Quote.builder().date(values[0]).open(Double.valueOf(values[1])).

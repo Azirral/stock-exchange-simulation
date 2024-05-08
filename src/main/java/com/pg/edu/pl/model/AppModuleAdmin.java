@@ -19,29 +19,6 @@ public class AppModuleAdmin {
     private void dataInit() {
         this.accounts = new Accounts(new ArrayList<UserProfile>());
         this.user = null;
-        this.quote = Quote.builder()
-                .price(145.775)
-                .changesPercentage(0.32)
-                .change(0.465)
-                .dayLow(143.9)
-                .dayHigh(146.71)
-//                .yearHigh(179.61)
-//                .yearLow(124.17)
-//                .marketCap(2306437439846L)
-//                .priceAvg50(140.8724)
-//                .priceAvg200(147.18594)
-                .volume(42478176L)
-//                .avgVolume(73638864L)
-                .open(144.38)
-//                .previousClose(145.31)
-//                .eps(5.89)
-//                .pe(24.75)
-//                .earningsAnnouncement("2023-04-26T10:59:00.000+0000")
-//                .sharesOutstanding(15821899776L)
-                .timestamp(1677790773D)
-                .stock(null) // Set the Stock object
-                .build();
-        this.quotes = Quotes.builder().quote(this.quote).build();
         this.symbol = Stock.builder()
                 .symbol("AAACX")
                 .name("American Beacon Balanced Fund R5 Class")
@@ -70,7 +47,6 @@ public class AppModuleAdmin {
                         accounts.register();
                         break;
                     case 3:
-                        System.out.println(quote.toString());
                         break;
                     case 4:
                         System.out.println(accounts.getUsers().get(0));

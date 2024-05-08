@@ -38,7 +38,7 @@ public class Purchase extends Transaction {
         Map.Entry<Symbol, Double> entry = this.getWallet().findEquityHolding(symbol);
         if (entry != null) {
             this.getWallet().setCredit(this.getWallet().getCredit()
-                    - (this.getAmount() * this.getEquityHolding().getPrice()));
+                    - (this.getAmount() * this.getEquityHolding().getClose()));
             this.getWallet().getEquitiesOwned().computeIfPresent(entry.getKey(), (k, v) -> v + this.getAmount());
         }
         else {
