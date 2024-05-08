@@ -17,14 +17,14 @@ public class Quote extends EquityHolding implements Comparable<EquityHolding> {
     /** The stock associated with this quote. */
     private Stock stock;
 
-    /** Earnings per share of stock */
-    private Double eps;
-
-    /** Price to earnings ratio. */
-    private Double pe;
-
-    /** Date and time of Statement of company's profitability. */
-    private String earningsAnnouncement;
+//    /** Earnings per share of stock */
+//    private Double eps;
+//
+//    /** Price to earnings ratio. */
+//    private Double pe;
+//
+//    /** Date and time of Statement of company's profitability. */
+//    private String earningsAnnouncement;
 
     /**
      * Compares this quote to another quote based on their string representations.
