@@ -48,7 +48,7 @@ public class StockPrediction extends Prediction {
         /** Use timestamp as independent variable and price as dependent variable */
         for (Quote quote : quotes) {
             /** Use timestamp as independent variable and price as dependent variable */
-            regression.addData(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ"), quote.getClose());
+            regression.addData(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssXXX"), quote.getClose());
         }
 
         /** Get slope and intercept of the regression line */
@@ -63,8 +63,8 @@ public class StockPrediction extends Prediction {
         setPredictedPrice(nextPrice);
 
         /** Print the predicted price */
-        System.out.println("Prediction for: " + stockPredict.getName());
-        System.out.println("Predicted price: " + nextPrice + " for " + nextTimestamp);
+        System.out.println("Linear Regression Prediction for: " + stockPredict.getName());
+        System.out.println("Predicted price: " + nextPrice + " for " + new Date(nextTimestamp));
     }
 
     /**
@@ -78,7 +78,7 @@ public class StockPrediction extends Prediction {
         /** Perform polynomial regression */
         WeightedObservedPoints points = new WeightedObservedPoints();
         for (Quote quote : quotes) {
-            points.add(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ"), quote.getClose());
+            points.add(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssXXX"), quote.getClose());
         }
         PolynomialCurveFitter fitter = PolynomialCurveFitter.create(2); // Quadratic polynomial
         double[] coefficients = fitter.fit(points.toList());

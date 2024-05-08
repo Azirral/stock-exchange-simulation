@@ -46,7 +46,7 @@ public class CryptoPrediction extends Prediction {
         /** Use timestamp as independent variable and price as dependent variable */
         for (CryptoQuote quote : quotes) {
             /** Use timestamp as independent variable and price as dependent variable */
-            regression.addData(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ"), quote.getClose());
+            regression.addData(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssXXX"), quote.getClose());
         }
 
         /** Get slope and intercept of the regression line */
@@ -73,7 +73,7 @@ public class CryptoPrediction extends Prediction {
         /** Prepare data for polynomial regression */
         WeightedObservedPoints obs = new WeightedObservedPoints();
         for (CryptoQuote quote : quotes) {
-            obs.add(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ") , quote.getClose());
+            obs.add(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssXXX") , quote.getClose());
         }
 
         /** Fit a polynomial curve to the data */

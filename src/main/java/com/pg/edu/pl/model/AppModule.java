@@ -5,10 +5,12 @@ import com.pg.edu.pl.model.equityEntities.categories.collections.Cryptos;
 import com.pg.edu.pl.model.equityEntities.categories.collections.Stocks;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
 import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
+import com.pg.edu.pl.model.prediction.StockPrediction;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 @Getter
@@ -127,6 +129,34 @@ public class AppModule {
                         System.out.println("user2 wallet: " + user.getWallet().getCredit());
                         break;
                     case 11:
+                        long start = System.currentTimeMillis();
+                        for (Stock stock : stocks.getStocks()) {
+                            if (stock.getQuotes() != null) {
+                                StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
+
+                                    predictor.predict_linear();
+                                    predictor.predict_polynomial();
+                            }
+                        }
+                        long end = System.currentTimeMillis();
+                        long duration = end-start;
+                        System.out.println(duration);
+                        break;
+                    case 12:
+                        long start_ = System.currentTimeMillis();
+                        for (Stock stock : stocks.getStocks()) {
+                            if (stock.getQuotes() != null) {
+                                StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
+
+                                predictor.predict_linear();
+                                predictor.predict_polynomial();
+                            }
+                        }
+                        long end_ = System.currentTimeMillis();
+                        long duration_ = end_-start_;
+                        System.out.println(duration_);
+                        break;
+                    case 13:
                         System.out.println("Exiting Stock Master. Goodbye!");
                         System.exit(0);
                         break;
@@ -137,6 +167,8 @@ public class AppModule {
         } catch (NoSuchElementException e) {
             System.out.println("Input not available. Please provide valid input.");
             scanner.next();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         } finally {
             scanner.close();
         }
@@ -154,7 +186,9 @@ public class AppModule {
         System.out.println("8. Save profile");
         System.out.println("9. Print users");
         System.out.println("10. Print wallets");
-        System.out.println("11. Exit");
+        System.out.println("11. Sequential prediction");
+        System.out.println("12. parallel prediction");
+        System.out.println("13. Exit");
     }
 
     public void runApplication() {
