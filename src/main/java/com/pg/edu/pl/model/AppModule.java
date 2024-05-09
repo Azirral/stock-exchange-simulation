@@ -28,7 +28,9 @@ public class AppModule {
     private CryptoQuotes cryptoQuotes;
     private UserProfile user;
     private Accounts accounts;
+
     private void dataInit() throws IOException{
+        ExecutorService executor = Executors.newFixedThreadPool(2);
         CSVLoader csvLoader = new CSVLoader();
         this.cryptoQuotes = CryptoQuotes.builder().cryptoQuotes(new ArrayList<>()).build();
         this.user = null;
@@ -86,6 +88,7 @@ public class AppModule {
             }
         }
         this.accounts = FileHandler.loadAccountsFromCSV("users.csv", null, bajaj_auto, cryptos, stocks);
+        executor.shutdown();
     }
 
     public void runMenu() {
@@ -116,16 +119,16 @@ public class AppModule {
                     case 4:
                         System.out.println(accounts.getUsers().get(0));
                         break;
-                    case 7:
+                    case 5:
                         accounts.getUsers().get(0).setName("Monika");
                         break;
-                    case 9:
+                    case 6:
                         System.out.println(accounts.getUsers().get(0));
                         break;
-                    case 10:
+                    case 7:
                         System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
                         break;
-                    case 11:
+                    case 8:
                         long start = System.currentTimeMillis();
                         for (Stock stock : stocks.getStocks()) {
                             if (stock.getQuotes() != null) {
@@ -139,16 +142,16 @@ public class AppModule {
                         long duration = end-start;
                         System.out.println(duration);
                         break;
-                    case 12:
+                    case 9:
                         threading(2);
                         break;
-                    case 13:
+                    case 10:
                         threading(3);
                         break;
-                    case 14:
+                    case 11:
                         threading(4);
                         break;
-                    case 15:
+                    case 12:
                         System.out.println("Exiting Stock Master. Goodbye!");
                         FileHandler.saveUserProfile("users.csv", accounts.getUsers());
                         System.exit(0);
@@ -173,17 +176,15 @@ public class AppModule {
         System.out.println("2. Register new Account");
         System.out.println("3. List stocks");
         System.out.println("4. Show UserProfile");
-        System.out.println("5. Purchase");
-        System.out.println("6. Sell");
-        System.out.println("7. Change name");
-        System.out.println("8. Save profile");
-        System.out.println("9. Print users");
-        System.out.println("10. Print wallets");
-        System.out.println("11. Sequential prediction");
-        System.out.println("12. parallel prediction on 2 threads");
-        System.out.println("13. parallel prediction on 3 threads");
-        System.out.println("14. parallel prediction on 4 threads");
-        System.out.println("15. Exit");
+        System.out.println("5. Change name");
+        System.out.println("6. Save profile");
+        System.out.println("7. Print users");
+        System.out.println("8. Print wallets");
+        System.out.println("8. Sequential prediction");
+        System.out.println("9. parallel prediction on 2 threads");
+        System.out.println("10. parallel prediction on 3 threads");
+        System.out.println("11. parallel prediction on 4 threads");
+        System.out.println("12. Exit");
     }
 
     public static void threading(int threads) {
@@ -215,11 +216,11 @@ public class AppModule {
                     System.out.println("Polynomial prediction time: " + (endThread - startThread) + "ms");
                 });
 
-                // Start the threads
+                /** Start the threads*/
                 linearPredictionThread.start();
                 polynomialPredictionThread.start();
 
-                // Wait for threads to finish
+                /** Wait for threads to finish */
                 try {
                     linearPredictionThread.join();
                     polynomialPredictionThread.join();
