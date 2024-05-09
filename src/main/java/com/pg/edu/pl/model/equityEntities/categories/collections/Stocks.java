@@ -4,6 +4,7 @@ import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,8 +17,7 @@ import java.util.List;
 @Setter
 public class Stocks implements Comparator<Stock> {
     /** The list of stock categories. */
-    @Singular
-    List<Stock> stocks;
+    ArrayList<Stock> stocks;
 
     /**
      * Compares two stock categories for order.

@@ -46,7 +46,7 @@ public class CryptoPrediction extends Prediction {
         /** Use timestamp as independent variable and price as dependent variable */
         for (CryptoQuote quote : quotes) {
             /** Use timestamp as independent variable and price as dependent variable */
-            regression.addData(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ"), quote.getClose());
+            regression.addData(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssXXX"), quote.getClose());
         }
 
         /** Get slope and intercept of the regression line */
@@ -73,7 +73,7 @@ public class CryptoPrediction extends Prediction {
         /** Prepare data for polynomial regression */
         WeightedObservedPoints obs = new WeightedObservedPoints();
         for (CryptoQuote quote : quotes) {
-            obs.add(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssZ") , quote.getClose());
+            obs.add(stringDateToTimestamp(quote.getDate(),"yyyy-MM-dd HH:mm:ssXXX") , quote.getClose());
         }
 
         /** Fit a polynomial curve to the data */
@@ -103,6 +103,14 @@ public class CryptoPrediction extends Prediction {
         return coefficients[0] + coefficients[1] * timestamp + coefficients[2] * nextTimestampSquared;
     }
 
+    /**
+     * This method is used to convert a string date to a timestamp.
+     *
+     * @param dateString The date as a string.
+     * @param format The format of the date string.
+     * @return The timestamp equivalent of the date string.
+     * @throws ParseException If the date string cannot be parsed.
+     */
     public static double stringDateToTimestamp(String dateString, String format) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         Date date = sdf.parse(dateString);

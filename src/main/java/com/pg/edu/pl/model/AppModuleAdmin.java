@@ -49,7 +49,6 @@ public class AppModuleAdmin {
                         accounts.register();
                         break;
                     case 3:
-                        System.out.println(quote.toString());
                         break;
                     case 4:
                         System.out.println(accounts.getUsers().get(0));
