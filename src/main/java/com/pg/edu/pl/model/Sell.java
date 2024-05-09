@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 import java.sql.SQLOutput;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 /**
  * Sell class is a subclass of abstract class Transaction. It is responsible for
@@ -26,19 +25,7 @@ public class Sell extends Transaction {
      * @param wallet        The user's wallet.
      */
     public Sell(EquityHolding equityHolding, Double amount, Long timestamp, Wallet wallet) {
-        super(UUID.randomUUID(), equityHolding, amount, timestamp, wallet);
-    }
-
-    /**
-     * Constructs a new Sell object with UUID provided.
-     *
-     * @param equityHolding The EquityHolding object representing the equity being sold.
-     * @param amount        The amount of equity being sold.
-     * @param timestamp     The timestamp of the transaction.
-     * @param wallet        The user's wallet.
-     */
-    public Sell(EquityHolding equityHolding, Double amount, Long timestamp, Wallet wallet, UUID uuid) {
-        super(UUID.randomUUID(), equityHolding, amount, timestamp, wallet);
+        super(equityHolding, amount, timestamp, wallet);
     }
 
     /**
@@ -53,7 +40,7 @@ public class Sell extends Transaction {
         Map.Entry<Symbol, Double> entry = this.getWallet().findEquityHolding(symbol);
         if (entry != null) {
             this.getWallet().setCredit(this.getWallet().getCredit()
-                    + (this.getAmount() * this.getEquityHolding().getClose()));
+                    + (this.getAmount() * this.getEquityHolding().getPrice()));
             this.getWallet().getEquitiesOwned().computeIfPresent(entry.getKey(), (k, v) -> v - this.getAmount());
         }
         else {

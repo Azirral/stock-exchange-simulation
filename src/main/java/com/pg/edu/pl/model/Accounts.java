@@ -1,14 +1,15 @@
 package com.pg.edu.pl.model;
 
 import com.pg.edu.pl.model.equityEntities.categories.Symbol;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 import java.util.*;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 public class Accounts {
     /** List that contains all users that had created their accounts*/
@@ -142,7 +143,6 @@ public class Accounts {
                 break;
         }
         Wallet wallet = Wallet.builder()
-                .uuid(UUID.randomUUID())
                 .credit(100.0)
                 .exchangeValue(10.0)
                 .lastSaleValue(10.0)
