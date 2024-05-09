@@ -103,6 +103,14 @@ public class CryptoPrediction extends Prediction {
         return coefficients[0] + coefficients[1] * timestamp + coefficients[2] * nextTimestampSquared;
     }
 
+    /**
+     * This method is used to convert a string date to a timestamp.
+     *
+     * @param dateString The date as a string.
+     * @param format The format of the date string.
+     * @return The timestamp equivalent of the date string.
+     * @throws ParseException If the date string cannot be parsed.
+     */
     public static double stringDateToTimestamp(String dateString, String format) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         Date date = sdf.parse(dateString);

@@ -95,6 +95,13 @@ public class StockPrediction extends Prediction {
         System.out.println("Predicted price: " + nextPrice + " for " + new Date(nextTimestamp));
     }
 
+    /**
+     * This method is used to evaluate a polynomial.
+     *
+     * @param coefficients The coefficients of the polynomial.
+     * @param timestamp The timestamp at which the polynomial is to be evaluated.
+     * @return The result of the polynomial evaluation.
+     */
     private double evaluatePolynomial(double[] coefficients, long timestamp) {
         double result = 0.0;
         for (int i = 0; i < coefficients.length; i++) {
@@ -103,6 +110,14 @@ public class StockPrediction extends Prediction {
         return result;
     }
 
+    /**
+     * This method is used to convert a string date to a timestamp.
+     *
+     * @param dateString The date as a string.
+     * @param format The format of the date string.
+     * @return The timestamp.
+     * @throws ParseException If the date string cannot be parsed.
+     */
     public static double stringDateToTimestamp(String dateString, String format) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         Date date = sdf.parse(dateString);
