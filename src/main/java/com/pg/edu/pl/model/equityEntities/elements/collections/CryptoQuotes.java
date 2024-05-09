@@ -28,4 +28,12 @@ public class CryptoQuotes implements Comparator<CryptoQuote> {
     public int compare(CryptoQuote o1, CryptoQuote o2) {
         return o1.compareTo(o2);
     }
+
+    public CryptoQuote findCryptoInList(String soughtCrypto) {
+        for (CryptoQuote cryptoQuote : cryptoQuotes) {
+            if (cryptoQuote.toString().equals(soughtCrypto))
+                return cryptoQuote;
+        }
+        return null;
+    }
 }

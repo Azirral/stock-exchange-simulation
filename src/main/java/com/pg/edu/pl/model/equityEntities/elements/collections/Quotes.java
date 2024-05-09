@@ -1,5 +1,6 @@
 package com.pg.edu.pl.model.equityEntities.elements.collections;
 
+import com.pg.edu.pl.model.equityEntities.elements.CryptoQuote;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
 import lombok.Builder;
 import lombok.Data;
@@ -27,5 +28,13 @@ public class Quotes implements Comparator<Quote> {
     @Override
     public int compare(Quote o1, Quote o2) {
         return o1.compareTo(o2);
+    }
+
+    public Quote findQuoteInList(String soughtQuote) {
+        for (Quote quote : quotes) {
+            if (quote.toString().equals(soughtQuote))
+                return quote;
+        }
+        return null;
     }
 }
