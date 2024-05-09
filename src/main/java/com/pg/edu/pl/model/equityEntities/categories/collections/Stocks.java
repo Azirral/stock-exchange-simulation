@@ -1,5 +1,6 @@
 package com.pg.edu.pl.model.equityEntities.categories.collections;
 
+import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import lombok.*;
 
@@ -27,5 +28,18 @@ public class Stocks implements Comparator<Stock> {
     @Override
     public int compare(Stock o1, Stock o2) {
         return o1.compareTo(o2);
+    }
+
+    /**
+     * Looks for Stock with the provided symbol in stocks list.
+     * @param symbol Individual symbol of each Crypto/Stock.
+     * @return A type Stock object with the same symbol attribute as provided
+     * */
+    public Stock findStock(String symbol) {
+        for (Stock stock : stocks) {
+            if (stock.getSymbol().equals(symbol))
+                return stock;
+        }
+        return null;
     }
 }

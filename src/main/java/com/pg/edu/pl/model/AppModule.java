@@ -3,7 +3,7 @@ package com.pg.edu.pl.model;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import com.pg.edu.pl.model.equityEntities.categories.collections.Cryptos;
 import com.pg.edu.pl.model.equityEntities.categories.collections.Stocks;
-import com.pg.edu.pl.model.equityEntities.elements.Quote;
+import com.pg.edu.pl.model.equityEntities.elements.collections.CryptoQuotes;
 import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
 import com.pg.edu.pl.model.prediction.StockPrediction;
 import lombok.Getter;
@@ -25,11 +25,12 @@ public class AppModule {
     private Quotes kotakbank;
     private Quotes yesbank;
     private Quotes siemens;
+    private CryptoQuotes cryptoQuotes;
     private UserProfile user;
     private Accounts accounts;
-    private void dataInit() {
+    private void dataInit() throws IOException{
         CSVLoader csvLoader = new CSVLoader();
-        this.accounts = new Accounts(new ArrayList<>());
+        this.cryptoQuotes = CryptoQuotes.builder().cryptoQuotes(new ArrayList<>()).build();
         this.user = null;
         try {
             this.stocks = csvLoader.loadStocksFromCSV("Stock.csv");
@@ -66,9 +67,7 @@ public class AppModule {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //find stock by symbol in stocks and set it to symbol
         for (Stock stock : stocks.getStocks()) {
-            //here it should overwrite the stocks list with the changed stock
             if (stock.getSymbol().equals("BAJAJ-AUTO.NS")) {
                 stock.setQuotes(bajaj_auto);
                 stocks.getStocks().set(stocks.getStocks().indexOf(stock), stock);
@@ -86,6 +85,7 @@ public class AppModule {
                 stocks.getStocks().set(stocks.getStocks().indexOf(stock), stock);
             }
         }
+        this.accounts = FileHandler.loadAccountsFromCSV("users.csv", null, bajaj_auto, cryptos, stocks);
     }
 
     public void runMenu() {
@@ -119,23 +119,18 @@ public class AppModule {
                     case 7:
                         accounts.getUsers().get(0).setName("Monika");
                         break;
-                    case 8:
-                        user = accounts.getUsers().get(0).clone();
-                        break;
                     case 9:
-                        System.out.println(user);
                         System.out.println(accounts.getUsers().get(0));
                         break;
                     case 10:
                         System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
-                        System.out.println("user2 wallet: " + user.getWallet().getCredit());
                         break;
                     case 11:
                         long start = System.currentTimeMillis();
                         for (Stock stock : stocks.getStocks()) {
                             if (stock.getQuotes() != null) {
-                                StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
-
+                                StockPrediction predictor = new StockPrediction("Stock Price Prediction",
+                                        "Using regression analysis", null, null, new Date(), stock);
                                     predictor.predict_linear();
                                     predictor.predict_polynomial();
                             }
@@ -155,6 +150,7 @@ public class AppModule {
                         break;
                     case 15:
                         System.out.println("Exiting Stock Master. Goodbye!");
+                        FileHandler.saveUserProfile("users.csv", accounts.getUsers());
                         System.exit(0);
                         break;
                     default:
@@ -238,7 +234,7 @@ public class AppModule {
         executor.shutdown();
     }
 
-    public void runApplication() {
+    public void runApplication() throws IOException {
             dataInit();
             runMenu();
         }

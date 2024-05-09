@@ -50,4 +50,8 @@ public abstract class EquityHolding implements Comparable<EquityHolding> {
     public int compareTo(EquityHolding o) {
         return this.toString().compareTo(o.toString());
     }
+
+    public String toCSV() {
+        return null;
+    }
 }

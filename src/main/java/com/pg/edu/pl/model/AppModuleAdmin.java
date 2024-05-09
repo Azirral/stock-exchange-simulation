@@ -19,6 +19,8 @@ public class AppModuleAdmin {
     private void dataInit() {
         this.accounts = new Accounts(new ArrayList<UserProfile>());
         this.user = null;
+        this.quote = null;
+        this.quotes = Quotes.builder().quote(this.quote).build();
         this.symbol = Stock.builder()
                 .symbol("AAACX")
                 .name("American Beacon Balanced Fund R5 Class")

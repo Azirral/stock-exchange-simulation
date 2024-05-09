@@ -6,6 +6,7 @@ import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Purchase class is a subclass of abstract class Transaction. It is responsible for
@@ -23,7 +24,19 @@ public class Purchase extends Transaction {
      * @param wallet        The user's wallet.
      */
     public Purchase(EquityHolding equityHolding, Double amount, Long timestamp, Wallet wallet) {
-        super(equityHolding, amount, timestamp, wallet);
+        super(UUID.randomUUID(), equityHolding, amount, timestamp, wallet);
+    }
+
+    /**
+     * Constructs a new Purchase object with UUID provided.
+     *
+     * @param equityHolding The EquityHolding object representing the equity being purchased.
+     * @param amount        The amount of equity being purchased.
+     * @param timestamp     The timestamp of the transaction.
+     * @param wallet        The user's wallet.
+     */
+    public Purchase(EquityHolding equityHolding, Double amount, Long timestamp, Wallet wallet, UUID uuid) {
+        super(UUID.randomUUID(), equityHolding, amount, timestamp, wallet);
     }
 
     /**
