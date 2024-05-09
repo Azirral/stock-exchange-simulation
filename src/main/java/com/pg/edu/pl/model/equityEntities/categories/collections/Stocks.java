@@ -30,6 +30,11 @@ public class Stocks implements Comparator<Stock> {
         return o1.compareTo(o2);
     }
 
+    /**
+     * Looks for Stock with the provided symbol in stocks list.
+     * @param symbol Individual symbol of each Crypto/Stock.
+     * @return A type Stock object with the same symbol attribute as provided
+     * */
     public Stock findStock(String symbol) {
         for (Stock stock : stocks) {
             if (stock.getSymbol().equals(symbol))

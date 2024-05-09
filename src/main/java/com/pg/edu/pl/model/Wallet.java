@@ -90,9 +90,9 @@ public class Wallet implements Cloneable{
     }
 
     /**
-     *
-     * @return A new instance of Wallet with identical field values.
-     */
+     * Gives a representation of the object in csv format with "," delimiter.
+     * @return A string which represents the object in csv format with "," delimiter
+     * */
     public String toCSV() {
         String sb =
                 formatTransactionsHistory() + "," +
@@ -104,6 +104,11 @@ public class Wallet implements Cloneable{
         return sb;
     }
 
+    /**
+     * Gives a representation of the object in csv format with "&" delimiter between separate HaspMap elements and ":"
+     * delimeter between flag, key, and value. The flag is used to differentiate crypto from stock.
+     * @return A string which represents the object in csv format with "," delimiter
+     * */
     private String formatEquitiesOwned() {
         StringBuilder equitiesBuilder = new StringBuilder();
         for (Symbol symbol : equitiesOwned.keySet()) {
@@ -114,6 +119,10 @@ public class Wallet implements Cloneable{
         return equitiesBuilder.toString();
     }
 
+    /**
+     * Gives a representation of the object in csv format with "#" delimiter.
+     * @return A string which represents the object in csv format with "#" delimiter
+     * */
     private String formatTransactionsHistory() {
         StringBuilder transactionsBuilder = new StringBuilder();
         for (Transaction transaction : transactionsHistory) {

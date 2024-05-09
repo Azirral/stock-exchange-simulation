@@ -66,6 +66,11 @@ public abstract class Transaction implements Comparable<Transaction>, Comparator
                 '}';
     }
 
+    /**
+     * Gives a representation of the object in csv format with "'" delimiter and a flag as a first element to distinguis
+     * Sell from Purchase and create the objects properly when loading from a file.
+     * @return A string which represents the object in csv format with "'" delimiter
+     * */
     public String toCSV() {
         char flag = (this instanceof Sell) ? 's' : 'p';
         return String.join("'", String.valueOf(flag), equityHolding.toCSV(), String.valueOf(uuid),

@@ -18,6 +18,11 @@ import java.util.UUID;
 
 public class FileHandler {
 
+    /**
+     * Saves list of all users profiles in the app and their wallets into a text file
+     * @param filepath the path of the file the info will be saved to
+     * @param userProfiles list of all userProfiles created in the app
+     */
     public static void saveUserProfile(String filepath, ArrayList<UserProfile> userProfiles) {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filepath));
@@ -32,6 +37,22 @@ public class FileHandler {
         }
     }
 
+    /**
+     * Loads all previously saved userProfile from the file. The data was saved in csv with different delimiters to
+     * distinguish the attributes and the levels they are in.
+     * @param filePath the path of the file the info will be saved to
+     * @param cryptoQuotes an Object of type CryptoQuotes which mainly contains an attribute list of all objects type
+     *                     CryptoQuote. It is need it to assign the loaded object type Transaction to particular
+     *                     CryptoQuote.
+     * @param quotes an Object of type Quotes which contains an attribute list of all objects type
+     *                     Quote. It is need it to assign the loaded object type Transaction to particular Quote.
+     * @param cryptos an Object of type Cryptos which contains an attribute list of all objects type
+     *                     Crypto. It is used to be able to find particular Crypto with given symbol and load a hashMap.
+     * @param stocks an Object of type Stocks which contains an attribute list of all objects type
+     *                     Stock. It is used to be able to find particular Crypto with given symbol and load a hashMap.
+     * @return An object type Accounts with loaded UserProfile class list and all its attributes/objects connected to
+     * the user such like wallet and transactions
+     * */
     public static Accounts loadAccountsFromCSV(String filePath, CryptoQuotes cryptoQuotes, Quotes quotes, Cryptos cryptos,
                                         Stocks stocks) throws IOException {
         ArrayList<UserProfile> userProfiles = new ArrayList<>();
@@ -54,6 +75,16 @@ public class FileHandler {
     }
 
 
+    /**
+     * Looks for Crypto with the provided symbol in cryptos list.
+     * @param equities Array of type string which contain three elements. 1st one is a flag to distinguish crypto from
+     *                 stocks. 2nd is Stock/Crypto symbol and 3rd is quantity of equity owned.
+     * @param cryptos an Object of type Cryptos which contains an attribute list of all objects type
+     *                     Crypto. It is used to be able to find particular Crypto with given symbol and load a hashMap.
+     * @param stocks an Object of type Stocks which contains an attribute list of all objects type
+     *                     Stock. It is used to be able to find particular Crypto with given symbol and load a hashMap.
+     * @return HashMap of all equities owned by the user that was read from the file
+     * */
     private static HashMap<Symbol,Double> loadEquitiesHashMap(String[] equities, Cryptos cryptos, Stocks stocks) {
         HashMap<Symbol,Double> equitiesOwned = new HashMap<>();
         if (equities[0].isEmpty())
@@ -69,6 +100,18 @@ public class FileHandler {
         return equitiesOwned;
     }
 
+    /**
+     * Loads all transactions of particular user from the file to the List and objects.
+     * @param transactions Array of type string which contain 6 elements. 1st one is a flag to distinguish crypto from
+     *                 stocks. The following ones are the attributes of a transaction.
+     * @param cryptoQuotes An Object of type CryptoQuotes which mainly contains an attribute list of all objects type
+     *                     CryptoQuote. It is need it to assign the loaded object type Transaction to particular
+     *                     CryptoQuote.
+     * @param quotes An Object of type Quotes which contains an attribute list of all objects type
+     *                     Quote. It is need it to assign the loaded object type Transaction to particular Quote.
+     * @param wallet An object of class Wallet to which the loaded transactions will be assigned to
+     * @param transactionsHistory An ArrayList of type Transaction to which the transactions will be added. It is
+     *                            assigned to particular user's wallet. */
     private static void loadTransactionsList(String[] transactions, CryptoQuotes cryptoQuotes, Quotes quotes,
                                                         Wallet wallet, ArrayList<Transaction> transactionsHistory) {
         if (transactions[0].isEmpty())

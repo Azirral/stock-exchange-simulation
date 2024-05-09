@@ -68,16 +68,20 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
                 '}';
     }
 
+    /**
+     * Gives a representation of the object in csv format with "," delimiter.
+     * @return A string which represents the object in csv format with "," delimiter
+     * */
     public String toCSV() {
         return profileBackground.getRed() + "," +
                 profileBackground.getGreen() + "," +
                 profileBackground.getBlue() + "," +
                 name + ',' +
                 surname + ',' +
-                super.getLogin() + ',' +
-                super.getPassword() + ',' +
-                super.getEmail() + ',' +
-                super.getUuid() + ',' +
+                getLogin() + ',' +
+                getPassword() + ',' +
+                getEmail() + ',' +
+                getUuid() + ',' +
                 wallet.getUuid();
     }
 

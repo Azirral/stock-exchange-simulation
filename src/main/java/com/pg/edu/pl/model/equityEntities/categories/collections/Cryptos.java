@@ -29,7 +29,11 @@ public class Cryptos implements Comparator<Crypto> {
         return o1.compareTo(o2);
     }
 
-
+    /**
+     * Looks for Crypto with the provided symbol in cryptos list.
+     * @param symbol Individual symbol of each Crypto/Stock.
+     * @return A type Crypto object with the same symbol attribute as provided
+     * */
     public Crypto findCrypto(String symbol) {
         for (Crypto crypto : cryptos) {
             if (crypto.getSymbol().equals(symbol))

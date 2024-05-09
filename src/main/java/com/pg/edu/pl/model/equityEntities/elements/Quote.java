@@ -50,6 +50,11 @@ public class Quote extends EquityHolding implements Comparable<EquityHolding> {
                 '}';
     }
 
+    /**
+     * Gives a representation of the object in csv format with "~" delimiter and a flag as a first element to vary quote
+     * from cryptoQuote. It is needed to properly load objects from file.
+     * @return A string which represents the object in csv format with "~" delimiter
+     * */
     @Override
     public String toCSV() {
         return String.join("~", "q",getDate(), String.valueOf(getOpen()),
