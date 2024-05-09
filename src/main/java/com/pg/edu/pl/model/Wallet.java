@@ -1,6 +1,7 @@
 package com.pg.edu.pl.model;
 
 
+import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Wallet class is responsible that resembles user's wallet and
@@ -21,6 +23,7 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 public class Wallet implements Cloneable{
+    private UUID uuid;
     /** Value of all equities owned in USD (exchanged)*/
     private Double exchangeValue;
     /** Amount of money user has in the account that is not exchanged to equity*/
@@ -31,6 +34,7 @@ public class Wallet implements Cloneable{
     private HashMap<Symbol, Double> equitiesOwned;
     /** History of all transactions made by the user */
     private ArrayList<Transaction> transactionsHistory;
+
 
     /**
      * Method responsible for finding a given equity in the equitiesOwned map.
@@ -72,6 +76,59 @@ public class Wallet implements Cloneable{
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    public String toString() {
+        return "Wallet{" +
+                "uuid=" + uuid +
+                ", exchangeValue=" + exchangeValue +
+                ", credit=" + credit +
+                ", lastSaleValue=" + lastSaleValue +
+                ", equitiesOwned=" + equitiesOwned +
+                ", transactionsHistory=" + transactionsHistory +
+                '}';
+    }
+
+    /**
+     * Gives a representation of the object in csv format with "," delimiter.
+     * @return A string which represents the object in csv format with "," delimiter
+     * */
+    public String toCSV() {
+        String sb =
+                formatTransactionsHistory() + "," +
+                formatEquitiesOwned() + "," +
+                uuid + "," +
+                exchangeValue + "," +
+                credit + "," +
+                lastSaleValue + ",";
+        return sb;
+    }
+
+    /**
+     * Gives a representation of the object in csv format with "&" delimiter between separate HaspMap elements and ":"
+     * delimeter between flag, key, and value. The flag is used to differentiate crypto from stock.
+     * @return A string which represents the object in csv format with "," delimiter
+     * */
+    private String formatEquitiesOwned() {
+        StringBuilder equitiesBuilder = new StringBuilder();
+        for (Symbol symbol : equitiesOwned.keySet()) {
+            char flag = (symbol instanceof Crypto) ? 'c' : 's';
+            equitiesBuilder.append(flag).append(":").append(symbol.getSymbol()).append(":").
+                    append(equitiesOwned.get(symbol)).append("&");
+        }
+        return equitiesBuilder.toString();
+    }
+
+    /**
+     * Gives a representation of the object in csv format with "#" delimiter.
+     * @return A string which represents the object in csv format with "#" delimiter
+     * */
+    private String formatTransactionsHistory() {
+        StringBuilder transactionsBuilder = new StringBuilder();
+        for (Transaction transaction : transactionsHistory) {
+            transactionsBuilder.append(transaction.toCSV()).append("#");
+        }
+        return transactionsBuilder.toString();
     }
 
 }

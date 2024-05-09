@@ -1,47 +1,37 @@
 package com.pg.edu.pl.model;
 
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
+import com.pg.edu.pl.model.equityEntities.categories.Symbol;
+import com.pg.edu.pl.model.equityEntities.categories.collections.Cryptos;
+import com.pg.edu.pl.model.equityEntities.categories.collections.Stocks;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
+import com.pg.edu.pl.model.equityEntities.elements.collections.CryptoQuotes;
 import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.util.*;
 
 @Getter
 @Setter
 public class AppModule {
-    private Quote quote;
     private Quotes quotes;
-    private Stock symbol;
-    private UserProfile user;
+    private CryptoQuotes cryptoQuotes;
+    private Cryptos cryptos;
+    private Stocks stocks;
     private Accounts accounts;
-    private void dataInit() {
-        this.accounts = new Accounts(new ArrayList<>());
-        this.user = null;
-        this.quote = Quote.builder()
-                .price(145.775)
-                .changesPercentage(0.32)
-                .change(0.465)
-                .dayLow(143.9)
-                .dayHigh(146.71)
-//                .yearHigh(179.61)
-//                .yearLow(124.17)
-//                .marketCap(2306437439846L)
-//                .priceAvg50(140.8724)
-//                .priceAvg200(147.18594)
-                .volume(42478176L)
-//                .avgVolume(73638864L)
-                .open(144.38)
-//                .previousClose(145.31)
-//                .eps(5.89)
-//                .pe(24.75)
-//                .earningsAnnouncement("2023-04-26T10:59:00.000+0000")
-//                .sharesOutstanding(15821899776L)
-                .timestamp(1677790773D)
-                .stock(null) // Set the Stock object
-                .build();
-        this.quotes = Quotes.builder().quote(this.quote).build();
+    private Symbol symbol;
+
+    private void dataInit() throws IOException {
+        this.quotes = Quotes.builder().quotes(new ArrayList<>()).build();
+        this.cryptoQuotes = CryptoQuotes.builder().cryptoQuotes(new ArrayList<>()).build();
+        this.cryptos = Cryptos.builder().cryptos(new ArrayList<>()).build();
+        this.stocks = Stocks.builder().stocks(new ArrayList<>()).build();
+        //this.accounts = Accounts.builder().users(new ArrayList<>()).build();
+        this.accounts = FileHandler.loadAccountsFromCSV("users.csv", cryptoQuotes, quotes, cryptos, stocks);
+
+
         this.symbol = Stock.builder()
                 .symbol("AAACX")
                 .name("American Beacon Balanced Fund R5 Class")
@@ -70,13 +60,13 @@ public class AppModule {
                         accounts.register();
                         break;
                     case 3:
-                        System.out.println(quote.toString());
+                        //System.out.println(quote.toString());
                         break;
                     case 4:
                         System.out.println(accounts.getUsers().get(0));
                         break;
                     case 5:
-                        System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
+                    /*    System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
                         if (accounts.getUsers().get(0).getWallet().getTransactionsHistory() != null)
                             System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         Purchase p = Purchase.builder()
@@ -88,9 +78,9 @@ public class AppModule {
                         p.performTransaction(symbol);
                         System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
                         System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
-                        break;
+                        break;*/
                     case 6:
-                        System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
+                        /*System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
                         System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
                         Sell s = Sell.builder()
                                 .equityHolding(quote)
@@ -101,23 +91,24 @@ public class AppModule {
                         s.performTransaction(symbol);
                         System.out.println(accounts.getUsers().get(0).getWallet().getEquitiesOwned().toString());
                         System.out.println(accounts.getUsers().get(0).getWallet().getTransactionsHistory().toString());
-                        break;
+                       */ break;
                     case 7:
                         accounts.getUsers().get(0).setName("Monika");
                         break;
                     case 8:
-                        user = accounts.getUsers().get(0).clone();
+                        //user = accounts.getUsers().get(0).clone();
                         break;
                     case 9:
-                        System.out.println(user);
+                        //System.out.println(user);
                         System.out.println(accounts.getUsers().get(0));
                         break;
                     case 10:
                         System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
-                        System.out.println("user2 wallet: " + user.getWallet().getCredit());
+                        //System.out.println("user2 wallet: " + user.getWallet().getCredit());
                         break;
                     case 11:
                         System.out.println("Exiting Stock Master. Goodbye!");
+                        FileHandler.saveUserProfile("users.csv", accounts.getUsers());
                         System.exit(0);
                         break;
                     default:
@@ -147,7 +138,7 @@ public class AppModule {
         System.out.println("11. Exit");
     }
 
-    public void runApplication() {
+    public void runApplication() throws IOException {
             dataInit();
             runMenu();
         }

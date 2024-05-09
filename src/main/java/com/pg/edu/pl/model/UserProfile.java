@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.awt.*;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.UUID;
 
 
 /**
@@ -23,7 +24,7 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
 
     protected UserProfile(Wallet wallet, Color profileBackground, String name, String surname,
                           String login, String password, String email) {
-        super(login, password, email);
+        super(UUID.randomUUID(), login, password, email);
         this.profileBackground = profileBackground;
         this.name = name;
         this.surname = surname;
@@ -35,8 +36,20 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
      * */
     protected UserProfile(Wallet wallet, String name, String surname,
                           String login, String password, String email) {
-        super(email, login, password);
+        super(UUID.randomUUID(), email, login, password);
         this.profileBackground = null;
+        this.name = name;
+        this.surname = surname;
+        this.wallet = wallet;
+    }
+
+    /**
+     * Constructor for creating an object with uuid provided
+     * */
+    protected UserProfile(Wallet wallet, Color profileBackground, String name, String surname,
+                          String login, String password, String email, UUID uuid) {
+        super(uuid, email, login, password);
+        this.profileBackground = profileBackground;
         this.name = name;
         this.surname = surname;
         this.wallet = wallet;
@@ -53,6 +66,23 @@ public class UserProfile extends Account implements Cloneable, Comparable<UserPr
                 ", surname='" + surname + '\'' +
                 ", wallet=" + wallet +
                 '}';
+    }
+
+    /**
+     * Gives a representation of the object in csv format with "," delimiter.
+     * @return A string which represents the object in csv format with "," delimiter
+     * */
+    public String toCSV() {
+        return profileBackground.getRed() + "," +
+                profileBackground.getGreen() + "," +
+                profileBackground.getBlue() + "," +
+                name + ',' +
+                surname + ',' +
+                getLogin() + ',' +
+                getPassword() + ',' +
+                getEmail() + ',' +
+                getUuid() + ',' +
+                wallet.getUuid();
     }
 
     // deep cloning method

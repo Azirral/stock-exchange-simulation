@@ -35,4 +35,30 @@ public class Quote extends EquityHolding implements Comparable<EquityHolding> {
     public int compareTo(EquityHolding o) {
         return this.toString().compareTo(o.toString());
     }
+
+    @Override
+    public String toString() {
+        return "Quote{" +
+                "date='" + getDate() + '\'' +
+                ", open=" + getOpen() +
+                ", low=" + getLow() +
+                ", high=" + getHigh() +
+                ", close=" + getClose() +
+                ", volume=" + getVolume() +
+                ", symbol='" + getSymbol() + '\'' +
+                ", stock=" + stock +
+                '}';
+    }
+
+    /**
+     * Gives a representation of the object in csv format with "~" delimiter and a flag as a first element to vary quote
+     * from cryptoQuote. It is needed to properly load objects from file.
+     * @return A string which represents the object in csv format with "~" delimiter
+     * */
+    @Override
+    public String toCSV() {
+        return String.join("~", "q",getDate(), String.valueOf(getOpen()),
+                String.valueOf(getLow()), String.valueOf(getHigh()), String.valueOf(getClose()),
+                String.valueOf(getVolume()), getSymbol(), String.valueOf(stock));
+    }
 }
