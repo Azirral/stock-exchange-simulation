@@ -1,4 +1,4 @@
-package com.pg.edu.pl.model;
+package com.pg.edu.pl.classes;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,10 +17,7 @@ public abstract class Account {
     /** Username used to log into the user's account */
     private String login;
     private String password;
-
-    /**
-     * Override toString method to print the object
-     * */
+    // Override toString method to print the object
     @Override
     public String toString() {
         return "Account{" +
