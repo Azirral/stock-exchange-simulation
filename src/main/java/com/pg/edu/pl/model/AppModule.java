@@ -106,7 +106,7 @@ public class AppModule {
                 stocks.getStocks().set(stocks.getStocks().indexOf(stock), stock);
             }
         }
-        this.accounts = FileHandler.loadAccountsFromCSV("users.csv", null, bajaj_auto, cryptos, stocks);
+//        this.accounts = FileHandler.loadAccountsFromCSV("users.csv", null, bajaj_auto, cryptos, stocks);
         executor.shutdown();
     }
 
@@ -178,7 +178,7 @@ public class AppModule {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        for (int n = 2; n < 7; n++) {
+                        for (int n = 1; n < 7; n++) {
                             try {
                                 FileWriter writer = new FileWriter("durations_on_" + n + "threads" + ".csv");
 
