@@ -1,9 +1,11 @@
-package com.pg.edu.pl.classes;
+package com.pg.edu.pl.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.UUID;
 
 /**
  * Account class  is an abstract class that holds variables needed to log into
@@ -13,11 +15,15 @@ import lombok.Setter;
 @Getter(AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Account {
+    private UUID uuid;
     private String email;
     /** Username used to log into the user's account */
     private String login;
     private String password;
-    // Override toString method to print the object
+
+    /**
+     * Override toString method to print the object
+     * */
     @Override
     public String toString() {
         return "Account{" +
