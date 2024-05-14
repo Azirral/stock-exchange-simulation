@@ -35,8 +35,5 @@ public abstract class Prediction {
      */
     private Date log_date;
 
-    public abstract void predictLinear() throws Exception;
-
-    public abstract void predictLinearMultiThreads(int threads) throws Exception;
-
+    public abstract void predict();
 }
