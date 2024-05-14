@@ -9,28 +9,46 @@ import com.pg.edu.pl.model.prediction.StockPrediction;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * This class represents the main module of the application.
+ */
 @Getter
 @Setter
 public class AppModule {
+    /** Collection of stock entities */
     private static Stocks stocks;
+    /** Collection of cryptocurrency entities */
     private Cryptos cryptos;
+    /** Quotes for Bajaj Auto */
     private Quotes bajaj_auto;
+    /** Quotes for Cipla */
     private Quotes cipla;
+    /** Quotes for Kotak Bank */
     private Quotes kotakbank;
+    /** Quotes for Yes Bank */
     private Quotes yesbank;
+    /** Quotes for Siemens */
     private Quotes siemens;
+    /** Collection of cryptocurrency quotes */
     private CryptoQuotes cryptoQuotes;
+    /** User profile */
     private UserProfile user;
+    /** User accounts */
     private Accounts accounts;
 
-
-    private void dataInit() throws IOException{
+    /**
+     * Initializes the data required for the application to run.
+     *
+     * @throws IOException if an I/O error occurs
+     */
+    private void dataInit() throws IOException {
         ExecutorService executor = Executors.newFixedThreadPool(2);
         CSVLoader csvLoader = new CSVLoader();
         this.cryptoQuotes = CryptoQuotes.builder().cryptoQuotes(new ArrayList<>()).build();
@@ -92,6 +110,9 @@ public class AppModule {
         executor.shutdown();
     }
 
+    /**
+     * Runs the main menu of the application.
+     */
     public void runMenu() {
         Scanner scanner = new Scanner(System.in);
         try {
@@ -130,29 +151,58 @@ public class AppModule {
                         System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
                         break;
                     case 8:
-                        long start = System.currentTimeMillis();
-                        for (Stock stock : stocks.getStocks()) {
-                            if (stock.getQuotes() != null) {
-                                StockPrediction predictor = new StockPrediction("Stock Price Prediction",
-                                        "Using regression analysis", null, null, new Date(), stock);
-                                    predictor.predict_linear();
-                                    predictor.predict_polynomial();
+                        try {
+                            FileWriter writer = new FileWriter("durations.csv");
+
+                            /** Write header to CSV file */
+                            writer.write("Iteration,Duration (ms)\n");
+
+                            for (int i = 0; i < 100; i++) {
+                                long start = System.currentTimeMillis();
+                                for (Stock stock : stocks.getStocks()) {
+                                    if (stock.getQuotes() != null) {
+                                        StockPrediction predictor = new StockPrediction("Stock Price Prediction",
+                                                "Using regression analysis", null, null, new Date(), stock);
+                                        predictor.predictLinear();
+                                    }
+                                }
+                                long end = System.currentTimeMillis();
+                                long duration = end - start;
+                                System.out.println("Duration " + i + ": " + duration);
+
+                                /** Write duration to CSV file */
+                                writer.write(i + "," + duration + "\n");
+                            }
+
+                            writer.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        for (int n = 2; n < 7; n++) {
+                            try {
+                                FileWriter writer = new FileWriter("durations_on_" + n + "threads" + ".csv");
+
+                                /** Write header to CSV file */
+                                writer.write("Iteration,Duration (ms)\n");
+
+                                for (int i = 1; i < 100; i++) {
+                                    long start = System.currentTimeMillis();
+                                    threading(n);
+                                    long end = System.currentTimeMillis();
+                                    long duration = end - start;
+                                    System.out.println("Duration " + i + ": " + duration);
+
+                                    /** Write duration to CSV file */
+                                    writer.write(i + "," + duration + "\n");
+                                }
+
+                                writer.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
-                        long end = System.currentTimeMillis();
-                        long duration = end-start;
-                        System.out.println(duration);
                         break;
                     case 9:
-                        threading(2);
-                        break;
-                    case 10:
-                        threading(3);
-                        break;
-                    case 11:
-                        threading(4);
-                        break;
-                    case 12:
                         System.out.println("Exiting Stock Master. Goodbye!");
                         FileHandler.saveUserProfile("users.csv", accounts.getUsers());
                         System.exit(0);
@@ -170,6 +220,10 @@ public class AppModule {
             scanner.close();
         }
     }
+
+    /**
+     * Prints the main menu of the application.
+     */
     public static void printMainMenu() {
         System.out.println("Welcome to Stock Master - Your Ultimate Stock Simulation Experience!\n");
         System.out.println("Main Menu:\n");
@@ -180,17 +234,16 @@ public class AppModule {
         System.out.println("5. Change name");
         System.out.println("6. Save profile");
         System.out.println("7. Print users");
-        System.out.println("8. Print wallets");
-        System.out.println("8. Sequential prediction");
-        System.out.println("9. parallel prediction on 2 threads");
-        System.out.println("10. parallel prediction on 3 threads");
-        System.out.println("11. parallel prediction on 4 threads");
-        System.out.println("12. Exit");
+        System.out.println("8. Test multithreading");
+        System.out.println("9. Exit");
     }
 
+    /**
+     * Perform multi-threaded stock predictions.
+     *
+     * @param threads Number of threads to use
+     */
     public static void threading(int threads) {
-        ExecutorService executor = Executors.newFixedThreadPool(threads);
-        long start_ = System.currentTimeMillis();
         for (Stock stock : stocks.getStocks()) {
             if (stock.getQuotes() != null) {
                 StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
@@ -198,7 +251,7 @@ public class AppModule {
                 Thread linearPredictionThread = new Thread(() -> {
                     long startThread = System.currentTimeMillis();
                     try {
-                        predictor.predict_linear();
+                        predictor.predictLinearMultiThreads(threads);
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
@@ -206,38 +259,25 @@ public class AppModule {
                     System.out.println("Linear prediction time: " + (endThread - startThread) + "ms");
                 });
 
-                Thread polynomialPredictionThread = new Thread(() -> {
-                    long startThread = System.currentTimeMillis();
-                    try {
-                        predictor.predict_polynomial();
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                    long endThread = System.currentTimeMillis();
-                    System.out.println("Polynomial prediction time: " + (endThread - startThread) + "ms");
-                });
-
                 /** Start the threads*/
                 linearPredictionThread.start();
-                polynomialPredictionThread.start();
-
                 /** Wait for threads to finish */
                 try {
                     linearPredictionThread.join();
-                    polynomialPredictionThread.join();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
-        long end_ = System.currentTimeMillis();
-        long duration_ = end_-start_;
-        System.out.println(duration_);
-        executor.shutdown();
     }
 
+    /**
+     * Runs the application.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void runApplication() throws IOException {
-            dataInit();
-            runMenu();
-        }
+        dataInit();
+        runMenu();
     }
+}
