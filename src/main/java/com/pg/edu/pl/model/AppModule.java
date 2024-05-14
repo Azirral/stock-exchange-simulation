@@ -153,53 +153,37 @@ public class AppModule {
                     case 8:
                         try {
                             FileWriter writer = new FileWriter("durations.csv");
-
                             /** Write header to CSV file */
-                            writer.write("Iteration,Duration (ms)\n");
-
-                            for (int i = 0; i < 100; i++) {
-                                long start = System.currentTimeMillis();
-                                for (Stock stock : stocks.getStocks()) {
-                                    if (stock.getQuotes() != null) {
-                                        StockPrediction predictor = new StockPrediction("Stock Price Prediction",
-                                                "Using regression analysis", null, null, new Date(), stock);
-                                        predictor.predictLinear();
-                                    }
-                                }
-                                long end = System.currentTimeMillis();
-                                long duration = end - start;
-                                System.out.println("Duration " + i + ": " + duration);
-
-                                /** Write duration to CSV file */
-                                writer.write(i + "," + duration + "\n");
+                            for (int n = 1; n <= 7; n++) {
+                                writer.write(n + ",");
                             }
+                            writer.write("\n");
 
-                            writer.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        for (int n = 1; n < 7; n++) {
-                            try {
-                                FileWriter writer = new FileWriter("durations_on_" + n + "threads" + ".csv");
-
-                                /** Write header to CSV file */
-                                writer.write("Iteration,Duration (ms)\n");
-
+                            /** Collect duration data */
+                            double[][] durations = new double[99][7];
+                            for (int n = 1; n <= 7; n++) {
                                 for (int i = 1; i < 100; i++) {
                                     long start = System.currentTimeMillis();
                                     threading(n);
                                     long end = System.currentTimeMillis();
                                     long duration = end - start;
-                                    System.out.println("Duration " + i + ": " + duration);
-
-                                    /** Write duration to CSV file */
-                                    writer.write(i + "," + duration + "\n");
+                                    durations[i - 1][n - 1] = duration;
                                 }
-
-                                writer.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             }
+
+                            /** Write duration data to CSV file */
+                            for (int i = 0; i < 99; i++) {
+                                for (int j = 0; j < 7; j++) {
+                                    writer.write(durations[i][j] + ",");
+                                }
+                                writer.write("\n");
+                            }
+
+                            writer.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
                         }
                         break;
                     case 9:
@@ -214,7 +198,6 @@ public class AppModule {
         } catch (NoSuchElementException e) {
             System.out.println("Input not available. Please provide valid input.");
             scanner.next();
-        } catch (ParseException e) {
             throw new RuntimeException(e);
         } finally {
             scanner.close();
@@ -243,30 +226,11 @@ public class AppModule {
      *
      * @param threads Number of threads to use
      */
-    public static void threading(int threads) {
+    public static void threading(int threads) throws ParseException {
         for (Stock stock : stocks.getStocks()) {
             if (stock.getQuotes() != null) {
                 StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
-
-                Thread linearPredictionThread = new Thread(() -> {
-                    long startThread = System.currentTimeMillis();
-                    try {
-                        predictor.predictLinearMultiThreads(threads);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                    long endThread = System.currentTimeMillis();
-                    System.out.println("Linear prediction time: " + (endThread - startThread) + "ms");
-                });
-
-                /** Start the threads*/
-                linearPredictionThread.start();
-                /** Wait for threads to finish */
-                try {
-                    linearPredictionThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                predictor.predictLinearMultiThreads(threads);
             }
         }
     }
