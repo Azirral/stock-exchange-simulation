@@ -29,7 +29,7 @@ public class Accounts implements Serializable {
      * @param password The password of the user.
      * @return The UserProfile object if found, or null if not found.
      */
-    private UserProfile findUserAccount(String username, String password) {
+    public UserProfile findUserAccount(String username, String password) {
         for (UserProfile userProfile : users) {
             if (userProfile.getLogin().equals(username) && userProfile.getPassword().equals(password))
                 return userProfile;
@@ -41,31 +41,6 @@ public class Accounts implements Serializable {
      * Method to handle user login.
      */
     public void logIn() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Welcome to Stock Master - Login");
-
-        System.out.print("Enter username: ");
-        try {
-            String enteredUsername = scanner.nextLine();
-
-            System.out.print("Enter password: ");
-            String enteredPassword = scanner.nextLine();
-
-            if (findUserAccount(enteredUsername, enteredPassword) == null) {
-                System.out.println("Invalid username or password. Please try again.");
-                logIn();
-            }
-            System.out.println("You were successfully logged in!");
-
-        } catch (NoSuchElementException e) {
-            System.out.println("Input not available. Please provide valid input.");
-            // Consume the invalid input to prevent an infinite loop
-            scanner.next();
-        }
-    }
-
-    public void logInTCP() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to Stock Master - Login");

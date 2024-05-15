@@ -53,6 +53,7 @@ public class AppModule {
         CSVLoader csvLoader = new CSVLoader();
         this.cryptoQuotes = CryptoQuotes.builder().cryptoQuotes(new ArrayList<>()).build();
         this.user = null;
+        this.accounts = new Accounts(new ArrayList<>());
         try {
             this.stocks = csvLoader.loadStocksFromCSV("Stock.csv");
         } catch (IOException e) {
@@ -106,7 +107,7 @@ public class AppModule {
                 stocks.getStocks().set(stocks.getStocks().indexOf(stock), stock);
             }
         }
-//        this.accounts = FileHandler.loadAccountsFromCSV("users.csv", null, bajaj_auto, cryptos, stocks);
+        this.accounts = FileHandler.loadAccountsFromCSV("users.csv", null, bajaj_auto, cryptos, stocks);
         executor.shutdown();
     }
 

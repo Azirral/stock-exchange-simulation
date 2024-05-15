@@ -1,7 +1,12 @@
 package com.pg.edu.pl.model.server.tcp;
 
+import com.pg.edu.pl.model.Account;
+import com.pg.edu.pl.model.AppModuleUser;
+import com.pg.edu.pl.model.UserProfile;
+
 import java.io.*;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class TCPClient {
@@ -18,25 +23,11 @@ public class TCPClient {
         ObjectOutputStream outObject = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream inObject = new ObjectInputStream(socket.getInputStream());
 
-        // Send message to the server
-        out.println("Hello from client!");
-
-
-        while (true) {
-            // Receive response from the server
-            String response = in.readLine();
-            System.out.println("Server says: " + response);
-
-            Scanner scanner = new Scanner(System.in);
-            String message = scanner.nextLine();
-
-            out.println(message);
-
-            if (out.toString().equals("exit"))
-                break;
-
-        }
+        AppModuleUser appModuleUser = new AppModuleUser();
+        appModuleUser.runApplication(outObject, inObject);
         // Close the socket
         socket.close();
     }
+
+
 }

@@ -35,38 +35,4 @@ public abstract class Account implements Serializable {
                 ", password='" + password + '\'' +
                 '}';
     }
-
-
-    public Account logInTCP(BufferedWriter out, ObjectInputStream inObject) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Welcome to Stock Master - Login");
-
-        System.out.print("Enter username: ");
-        try {
-            String enteredUsername = scanner.nextLine();
-
-            out.write(enteredUsername);
-
-            System.out.print("Enter password: ");
-            String enteredPassword = scanner.nextLine();
-
-            out.write(enteredPassword);
-            Account user = (Account) inObject.readObject();
-            if (user == null) {
-                System.out.println("Invalid username or password. Please try again.");
-                logInTCP(out, inObject);
-            }
-            System.out.println("You were successfully logged in!");
-            return user;
-
-        } catch (NoSuchElementException e) {
-            System.out.println("Input not available. Please provide valid input.");
-            // Consume the invalid input to prevent an infinite loop
-            scanner.next();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
 }
