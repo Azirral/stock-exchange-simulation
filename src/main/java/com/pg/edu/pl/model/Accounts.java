@@ -65,6 +65,31 @@ public class Accounts implements Serializable {
         }
     }
 
+    public void logInTCP() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to Stock Master - Login");
+
+        System.out.print("Enter username: ");
+        try {
+            String enteredUsername = scanner.nextLine();
+
+            System.out.print("Enter password: ");
+            String enteredPassword = scanner.nextLine();
+
+            if (findUserAccount(enteredUsername, enteredPassword) == null) {
+                System.out.println("Invalid username or password. Please try again.");
+                logIn();
+            }
+            System.out.println("You were successfully logged in!");
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Input not available. Please provide valid input.");
+            // Consume the invalid input to prevent an infinite loop
+            scanner.next();
+        }
+    }
+
     /**
      * Method to handle the registration procedure for a new user.
      * @return The newly created UserProfile object.
