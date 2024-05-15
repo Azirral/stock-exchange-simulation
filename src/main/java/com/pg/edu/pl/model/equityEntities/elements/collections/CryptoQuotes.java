@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Builder
-public class CryptoQuotes implements Comparator<CryptoQuote> {
+public class CryptoQuotes implements Comparator<CryptoQuote>, Serializable {
     /** The list of cryptocurrency quotes. */
     @Singular
     private List<CryptoQuote> cryptoQuotes;

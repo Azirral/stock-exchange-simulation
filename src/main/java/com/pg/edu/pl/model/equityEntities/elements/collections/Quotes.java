@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Data
 @Builder
-public class Quotes implements Comparator<Quote> {
+public class Quotes implements Comparator<Quote>, Serializable {
     /** The list of stock quotes. */
     @Singular
     private List<Quote> quotes;

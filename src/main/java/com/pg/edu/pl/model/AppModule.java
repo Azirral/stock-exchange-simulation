@@ -229,7 +229,8 @@ public class AppModule {
     public static void threading(int threads) throws ParseException {
         for (Stock stock : stocks.getStocks()) {
             if (stock.getQuotes() != null) {
-                StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
+                StockPrediction predictor = new StockPrediction("Stock Price Prediction",
+                        "Using regression analysis", null, null, new Date(), stock);
                 predictor.predictLinearMultiThreads(threads);
             }
         }

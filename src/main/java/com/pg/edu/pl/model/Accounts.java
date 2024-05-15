@@ -4,13 +4,14 @@ import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import lombok.*;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
-public class Accounts {
+public class Accounts implements Serializable {
     /** List that contains all users that had created their accounts*/
     private ArrayList<UserProfile> users;
 
