@@ -106,7 +106,7 @@ public class AppModule {
                 stocks.getStocks().set(stocks.getStocks().indexOf(stock), stock);
             }
         }
-//        this.accounts = FileHandler.loadAccountsFromCSV("users.csv", null, bajaj_auto, cryptos, stocks);
+        this.accounts = FileHandler.loadAccountsFromCSV("users.csv", null, bajaj_auto, cryptos, stocks);
         executor.shutdown();
     }
 

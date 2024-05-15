@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
  * */
 @Setter
 @Getter
-public class UserProfile extends Account implements Cloneable, Comparable<UserProfile>, Comparator<UserProfile> {
+public class UserProfile extends Account implements Cloneable, Comparable<UserProfile>, Comparator<UserProfile>, Serializable {
     /** Color of the user's profile picture */
     private Color profileBackground;
     private String name;
