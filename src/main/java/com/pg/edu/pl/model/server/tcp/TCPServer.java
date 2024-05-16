@@ -30,19 +30,27 @@ public class TCPServer {
         ObjectOutputStream outObject = new ObjectOutputStream(clientSocket.getOutputStream());
         ObjectInputStream inObject = new ObjectInputStream(clientSocket.getInputStream());
 
-        try {
-            //Requirement LAB 6 Receiving Serialized object
-            Stock stock = (Stock) inObject.readObject();
-            System.out.println("Received UserCarParameters from client: " + stock);
+        while(true) {
+            try {
+                //Requirement LAB 6 Receiving Serialized object
+                Object o = inObject.readObject();
+                if(o instanceof Stock) {
+                    Stock stock = (Stock) o;
+                    System.out.println("Received UserCarParameters from client: " + stock);
 
-            StockPrediction prediction = threading(4, stock);
+                    StockPrediction prediction = threading(4, stock);
 
-            outObject.writeObject(prediction);
-        } catch (ClassNotFoundException | ParseException e) {
-            e.printStackTrace();
+                    outObject.writeObject(prediction);
+                }
+                else if (o instanceof String) {
+                    String message = (String) o;
+                    if (message.equals("exit"))
+                        break;
+                }
+            } catch (ClassNotFoundException | ParseException e) {
+                e.printStackTrace();
+            }
         }
-
-
         // Close the client socket
         clientSocket.close();
         // Close the server socket

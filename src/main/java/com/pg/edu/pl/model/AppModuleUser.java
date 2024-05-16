@@ -166,6 +166,7 @@ public class AppModuleUser {
                         }
                     case 9:
                         System.out.println("Exiting Stock Master. Goodbye!");
+                        objectOutputStream.writeObject("exit");
                         FileHandler.saveUserProfile("users.csv", accounts.getUsers());
                         System.exit(0);
                         break;
