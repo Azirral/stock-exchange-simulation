@@ -64,6 +64,12 @@ public class Accounts implements Serializable {
             scanner.next();
         }
     }
+    public UserProfile logIn(String enteredUsername, String enteredPassword) {
+        if (findUserAccount(enteredUsername, enteredPassword) == null) {
+            return null;
+        }
+        return findUserAccount(enteredUsername, enteredPassword);
+    }
 
     /**
      * Method to handle the registration procedure for a new user.
