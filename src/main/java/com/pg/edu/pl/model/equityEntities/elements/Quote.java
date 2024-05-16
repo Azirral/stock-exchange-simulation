@@ -4,6 +4,8 @@ import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 /**
  * Quote class is a subclass of EquityHolding that resembles a single quote
  */
@@ -13,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class Quote extends EquityHolding implements Comparable<EquityHolding> {
+public class Quote extends EquityHolding implements Comparable<EquityHolding>, Serializable {
     /** The stock associated with this quote. */
     private Stock stock;
 

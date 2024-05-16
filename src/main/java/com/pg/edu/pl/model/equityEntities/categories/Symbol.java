@@ -3,6 +3,8 @@ package com.pg.edu.pl.model.equityEntities.categories;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 /**
  * The Symbol class represents a financial symbol, which is a unique identifier for an equity or cryptocurrency.
  * It encapsulates information such as the symbol itself, the name of the equity or cryptocurrency,
@@ -13,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString
-public abstract class Symbol implements Comparable<Symbol> {
+public abstract class Symbol implements Comparable<Symbol>, Serializable {
     /**
      * The symbol of the equity.
      */

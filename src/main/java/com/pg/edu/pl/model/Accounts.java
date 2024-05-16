@@ -4,13 +4,14 @@ import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import lombok.*;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
-public class Accounts {
+public class Accounts implements Serializable {
     /** List that contains all users that had created their accounts*/
     private ArrayList<UserProfile> users;
 
@@ -28,7 +29,7 @@ public class Accounts {
      * @param password The password of the user.
      * @return The UserProfile object if found, or null if not found.
      */
-    private UserProfile findUserAccount(String username, String password) {
+    public UserProfile findUserAccount(String username, String password) {
         for (UserProfile userProfile : users) {
             if (userProfile.getLogin().equals(username) && userProfile.getPassword().equals(password))
                 return userProfile;
@@ -62,6 +63,12 @@ public class Accounts {
             // Consume the invalid input to prevent an infinite loop
             scanner.next();
         }
+    }
+    public UserProfile logIn(String enteredUsername, String enteredPassword) {
+        if (findUserAccount(enteredUsername, enteredPassword) == null) {
+            return null;
+        }
+        return findUserAccount(enteredUsername, enteredPassword);
     }
 
     /**

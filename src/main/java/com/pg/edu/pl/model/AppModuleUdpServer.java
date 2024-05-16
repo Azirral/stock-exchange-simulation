@@ -21,9 +21,9 @@ import java.util.concurrent.Executors;
  */
 @Getter
 @Setter
-public class AppModule {
+public class AppModuleUdpServer {
     /** Collection of stock entities */
-    private static Stocks stocks;
+    public static Stocks stocks;
     /** Collection of cryptocurrency entities */
     private Cryptos cryptos;
     /** Quotes for Bajaj Auto */
@@ -48,12 +48,11 @@ public class AppModule {
      *
      * @throws IOException if an I/O error occurs
      */
-    private void dataInit() throws IOException {
+    public void dataInit() throws IOException {
         ExecutorService executor = Executors.newFixedThreadPool(2);
         CSVLoader csvLoader = new CSVLoader();
         this.cryptoQuotes = CryptoQuotes.builder().cryptoQuotes(new ArrayList<>()).build();
         this.user = null;
-        this.accounts = new Accounts(new ArrayList<>());
         try {
             this.stocks = csvLoader.loadStocksFromCSV("Stock.csv");
         } catch (IOException e) {
@@ -114,94 +113,76 @@ public class AppModule {
     /**
      * Runs the main menu of the application.
      */
-    public void runMenu() {
-        Scanner scanner = new Scanner(System.in);
-        try {
-            while (true) {
-                printMainMenu();
-                System.out.print("\nEnter your choice: ");
-                String input = scanner.nextLine();
-                if (input.trim().isEmpty()) {
-                    System.out.println("Invalid input. Please enter a number between 1 and 6.");
-                    continue;
+    public void runAction(String choice) {
+        switch (choice) {
+
+            case "1":
+                accounts.logIn();
+                break;
+            case "2":
+                accounts.register();
+                break;
+            case "3":
+                for (Stock stock : stocks.getStocks()) {
+                    if (stock.getQuotes() != null)
+                        System.out.println(stock);
                 }
-                int choice = Integer.parseInt(input.trim());
-                switch (choice) {
-                    case 1:
-                        accounts.logIn();
-                        break;
-                    case 2:
-                        accounts.register();
-                        break;
-                    case 3:
-                        for (Stock stock : stocks.getStocks()) {
-                            if (stock.getQuotes() != null)
-                                System.out.println(stock);
+                break;
+            case "4":
+                System.out.println(accounts.getUsers().get(0));
+                break;
+            case "5":
+                accounts.getUsers().get(0).setName("Monika");
+                break;
+            case "6":
+                System.out.println(accounts.getUsers().get(0));
+                break;
+            case "7":
+                System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
+                break;
+            case "8":
+                try {
+                    FileWriter writer = new FileWriter("durations.csv");
+                    /** Write header to CSV file */
+                    for (int n = 1; n <= 7; n++) {
+                        writer.write(n + ",");
+                    }
+                    writer.write("\n");
+
+                    /** Collect duration data */
+                    double[][] durations = new double[99][7];
+                    for (int n = 1; n <= 7; n++) {
+                        for (int i = 1; i < 100; i++) {
+                            long start = System.currentTimeMillis();
+                            threading(n);
+                            long end = System.currentTimeMillis();
+                            long duration = end - start;
+                            durations[i - 1][n - 1] = duration;
                         }
-                        break;
-                    case 4:
-                        System.out.println(accounts.getUsers().get(0));
-                        break;
-                    case 5:
-                        accounts.getUsers().get(0).setName("Monika");
-                        break;
-                    case 6:
-                        System.out.println(accounts.getUsers().get(0));
-                        break;
-                    case 7:
-                        System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
-                        break;
-                    case 8:
-                        try {
-                            FileWriter writer = new FileWriter("durations.csv");
-                            /** Write header to CSV file */
-                            for (int n = 1; n <= 7; n++) {
-                                writer.write(n + ",");
-                            }
-                            writer.write("\n");
+                    }
 
-                            /** Collect duration data */
-                            double[][] durations = new double[99][7];
-                            for (int n = 1; n <= 7; n++) {
-                                for (int i = 1; i < 100; i++) {
-                                    long start = System.currentTimeMillis();
-                                    threading(n);
-                                    long end = System.currentTimeMillis();
-                                    long duration = end - start;
-                                    durations[i - 1][n - 1] = duration;
-                                }
-                            }
-
-                            /** Write duration data to CSV file */
-                            for (int i = 0; i < 99; i++) {
-                                for (int j = 0; j < 7; j++) {
-                                    writer.write(durations[i][j] + ",");
-                                }
-                                writer.write("\n");
-                            }
-
-                            writer.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ParseException e) {
-                            throw new RuntimeException(e);
+                    /** Write duration data to CSV file */
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 7; j++) {
+                            writer.write(durations[i][j] + ",");
                         }
-                        break;
-                    case 9:
-                        System.out.println("Exiting Stock Master. Goodbye!");
-                        FileHandler.saveUserProfile("users.csv", accounts.getUsers());
-                        System.exit(0);
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please enter a number between 1 and 6.");
+                        writer.write("\n");
+                    }
+
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
                 }
-            }
-        } catch (NoSuchElementException e) {
-            System.out.println("Input not available. Please provide valid input.");
-            scanner.next();
-            throw new RuntimeException(e);
-        } finally {
-            scanner.close();
+                break;
+            case "9":
+                System.out.println("Exiting Stock Master. Goodbye!");
+                FileHandler.saveUserProfile("users.csv", accounts.getUsers());
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Invalid choice. Please enter a number between 1 and 9.");
         }
     }
 
@@ -230,11 +211,14 @@ public class AppModule {
     public static void threading(int threads) throws ParseException {
         for (Stock stock : stocks.getStocks()) {
             if (stock.getQuotes() != null) {
-                StockPrediction predictor = new StockPrediction("Stock Price Prediction",
-                        "Using regression analysis", null, null, new Date(), stock);
+                StockPrediction predictor = new StockPrediction("Stock Price Prediction", "Using regression analysis", null, null, new Date(), stock);
                 predictor.predictLinearMultiThreads(threads);
             }
         }
+    }
+    public UserProfile runLogIn(String username, String password){
+        System.out.println("account has been checked");
+        return this.accounts.logIn(username, password);
     }
 
     /**
@@ -242,8 +226,4 @@ public class AppModule {
      *
      * @throws IOException if an I/O error occurs
      */
-    public void runApplication() throws IOException {
-        dataInit();
-        runMenu();
-    }
 }

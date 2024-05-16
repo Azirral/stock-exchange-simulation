@@ -5,6 +5,7 @@ import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @SuperBuilder
-public abstract class Transaction implements Comparable<Transaction>, Comparator<Transaction> {
+public abstract class Transaction implements Comparable<Transaction>, Comparator<Transaction>, Serializable {
     private UUID uuid;
     /** instance of equity holding on which the transaction will be performed */
     private EquityHolding equityHolding;

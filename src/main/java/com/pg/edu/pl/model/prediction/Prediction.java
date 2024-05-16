@@ -2,6 +2,7 @@ package com.pg.edu.pl.model.prediction;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -12,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor()
-public abstract class Prediction {
+public abstract class Prediction implements Serializable {
     /**
      * Name of the method used for prediction
      */
