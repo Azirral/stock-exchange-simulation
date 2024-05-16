@@ -14,6 +14,17 @@ import java.util.Date;
 
 public class TCPServer {
 
+    /**
+     * This method starts a server that listens on port 9090 for client connections.
+     * When a client connects, it sets up the input and output streams for communication.
+     * The server continuously listens for serialized objects from the client.
+     * If the received object is an instance of {@code Stock}, it processes the object
+     * using the {@code threading} method and sends back a {@code StockPrediction} object.
+     * If the received object is a {@code String} and the message is "exit",
+     * the server will terminate the connection.
+     *
+     * @throws IOException if an I/O error occurs when waiting for a connection.
+     */
     public static void runServer() throws IOException {
 
         ServerSocket serverSocket = new ServerSocket(9090);
@@ -57,6 +68,13 @@ public class TCPServer {
         serverSocket.close();
     }
 
+
+    /**
+     * Perform multi-threaded stock predictions.
+     *
+     * @param threads Number of threads to use
+     * @param stock Stock on which the Regression analysis will be performed
+     */
     public static StockPrediction threading(int threads, Stock stock) throws ParseException {
             if (stock.getQuotes() != null) {
                 StockPrediction predictor = new StockPrediction("Stock Price Prediction",

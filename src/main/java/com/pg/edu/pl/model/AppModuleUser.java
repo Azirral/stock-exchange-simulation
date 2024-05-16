@@ -154,6 +154,10 @@ public class AppModuleUser {
                     case 7:
                         System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
                         break;
+                        /*
+                        * Excercise 6 added functionality of sending an object of stock prediction to the server with
+                        * TCP and receiving back the stock prediction for this stock back
+                        * */
                     case 8:
                         objectOutputStream.writeObject(stocks.findStock("CIPLA.NS"));
                         try {
