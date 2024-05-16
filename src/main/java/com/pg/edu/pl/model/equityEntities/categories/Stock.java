@@ -4,6 +4,8 @@ import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 /**
  * The type Stock represents a category of stocks.
  */
@@ -13,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @Getter
 @Setter
-public class Stock extends Symbol implements Comparable<Symbol> {
+public class Stock extends Symbol implements Comparable<Symbol>, Serializable {
     /** The collection of quotes associated with this stock. */
     private Quotes quotes;
 

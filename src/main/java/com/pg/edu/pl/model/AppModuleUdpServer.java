@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 @Setter
 public class AppModuleUdpServer {
     /** Collection of stock entities */
-    private static Stocks stocks;
+    public static Stocks stocks;
     /** Collection of cryptocurrency entities */
     private Cryptos cryptos;
     /** Quotes for Bajaj Auto */
