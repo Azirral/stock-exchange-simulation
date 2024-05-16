@@ -4,6 +4,7 @@ import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.sql.SQLOutput;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -15,7 +16,7 @@ import java.util.UUID;
  */
 
 @SuperBuilder
-public class Sell extends Transaction {
+public class Sell extends Transaction implements Serializable {
 
     /**
      * Constructs a new Sell object.

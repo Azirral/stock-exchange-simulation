@@ -4,6 +4,8 @@ import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 /**
  * CryptoQuote class is a subclass of EquityHolding that resembles a cryptocurrency quote
  */
@@ -13,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @ToString(callSuper = true)
-public class CryptoQuote extends EquityHolding implements Comparable<EquityHolding>{
+public class CryptoQuote extends EquityHolding implements Comparable<EquityHolding>, Serializable {
     /** The cryptocurrency associated with this quote. */
     private Crypto crypto;
 

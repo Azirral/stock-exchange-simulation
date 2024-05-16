@@ -4,6 +4,7 @@ import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class Stocks implements Comparator<Stock> {
+public class Stocks implements Comparator<Stock>, Serializable {
     /** The list of stock categories. */
     ArrayList<Stock> stocks;
 

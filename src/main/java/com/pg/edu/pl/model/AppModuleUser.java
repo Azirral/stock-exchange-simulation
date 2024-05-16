@@ -5,12 +5,15 @@ import com.pg.edu.pl.model.equityEntities.categories.collections.Cryptos;
 import com.pg.edu.pl.model.equityEntities.categories.collections.Stocks;
 import com.pg.edu.pl.model.equityEntities.elements.collections.CryptoQuotes;
 import com.pg.edu.pl.model.equityEntities.elements.collections.Quotes;
+import com.pg.edu.pl.model.prediction.Prediction;
 import com.pg.edu.pl.model.prediction.StockPrediction;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -21,7 +24,7 @@ import java.util.concurrent.Executors;
  */
 @Getter
 @Setter
-public class AppModule {
+public class AppModuleUser {
     /** Collection of stock entities */
     private static Stocks stocks;
     /** Collection of cryptocurrency entities */
@@ -114,7 +117,7 @@ public class AppModule {
     /**
      * Runs the main menu of the application.
      */
-    public void runMenu() {
+    public void runMenu(ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
         Scanner scanner = new Scanner(System.in);
         try {
             while (true) {
@@ -151,54 +154,37 @@ public class AppModule {
                     case 7:
                         System.out.println("user1 wallet: " + accounts.getUsers().get(0).getWallet().getCredit());
                         break;
+                        /*
+                        * Excercise 6 added functionality of sending an object of stock prediction to the server with
+                        * TCP and receiving back the stock prediction for this stock back
+                        * */
                     case 8:
+                        objectOutputStream.writeObject(stocks.findStock("CIPLA.NS"));
                         try {
-                            FileWriter writer = new FileWriter("durations.csv");
-                            /** Write header to CSV file */
-                            for (int n = 1; n <= 7; n++) {
-                                writer.write(n + ",");
-                            }
-                            writer.write("\n");
+                            StockPrediction prediction = (StockPrediction) objectInputStream.readObject();
+                            System.out.println("Received server response successfully");
 
-                            /** Collect duration data */
-                            double[][] durations = new double[99][7];
-                            for (int n = 1; n <= 7; n++) {
-                                for (int i = 1; i < 100; i++) {
-                                    long start = System.currentTimeMillis();
-                                    threading(n);
-                                    long end = System.currentTimeMillis();
-                                    long duration = end - start;
-                                    durations[i - 1][n - 1] = duration;
-                                }
-                            }
-
-                            /** Write duration data to CSV file */
-                            for (int i = 0; i < 99; i++) {
-                                for (int j = 0; j < 7; j++) {
-                                    writer.write(durations[i][j] + ",");
-                                }
-                                writer.write("\n");
-                            }
-
-                            writer.close();
-                        } catch (IOException e) {
+                            System.out.println("Server response: " + prediction.toString());
+                        } catch (ClassNotFoundException e) {
                             e.printStackTrace();
-                        } catch (ParseException e) {
-                            throw new RuntimeException(e);
                         }
                         break;
                     case 9:
                         System.out.println("Exiting Stock Master. Goodbye!");
+                        objectOutputStream.writeObject("exit");
                         FileHandler.saveUserProfile("users.csv", accounts.getUsers());
                         System.exit(0);
                         break;
                     default:
                         System.out.println("Invalid choice. Please enter a number between 1 and 6.");
+                        break;
                 }
             }
         } catch (NoSuchElementException e) {
             System.out.println("Input not available. Please provide valid input.");
             scanner.next();
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
             scanner.close();
@@ -242,8 +228,8 @@ public class AppModule {
      *
      * @throws IOException if an I/O error occurs
      */
-    public void runApplication() throws IOException {
+    public void runApplication(ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) throws IOException {
         dataInit();
-        runMenu();
+        runMenu(objectOutputStream, objectInputStream);
     }
 }

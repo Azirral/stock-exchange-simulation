@@ -3,6 +3,7 @@ package com.pg.edu.pl.model.equityEntities.categories.collections;
 import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class Cryptos implements Comparator<Crypto> {
+public class Cryptos implements Comparator<Crypto>, Serializable {
     /** The list of cryptocurrency categories. */
     List<Crypto> cryptos;
 

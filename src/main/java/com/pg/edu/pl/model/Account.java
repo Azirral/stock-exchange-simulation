@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.*;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.UUID;
 
 /**
@@ -14,7 +17,7 @@ import java.util.UUID;
 @Setter(AccessLevel.PROTECTED)
 @Getter(AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class Account {
+public abstract class Account implements Serializable {
     private UUID uuid;
     private String email;
     /** Username used to log into the user's account */

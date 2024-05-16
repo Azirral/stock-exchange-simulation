@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Wallet implements Cloneable{
+public class Wallet implements Cloneable, Serializable {
     private UUID uuid;
     /** Value of all equities owned in USD (exchanged)*/
     private Double exchangeValue;
