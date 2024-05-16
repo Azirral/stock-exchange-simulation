@@ -164,6 +164,7 @@ public class AppModuleUser {
                         } catch (ClassNotFoundException e) {
                             e.printStackTrace();
                         }
+                        break;
                     case 9:
                         System.out.println("Exiting Stock Master. Goodbye!");
                         objectOutputStream.writeObject("exit");
@@ -172,6 +173,7 @@ public class AppModuleUser {
                         break;
                     default:
                         System.out.println("Invalid choice. Please enter a number between 1 and 6.");
+                        break;
                 }
             }
         } catch (NoSuchElementException e) {
