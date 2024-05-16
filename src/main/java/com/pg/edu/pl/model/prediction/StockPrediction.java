@@ -4,6 +4,7 @@ import org.apache.commons.math3.stat.regression.SimpleRegression;
 import com.pg.edu.pl.model.equityEntities.categories.Stock;
 import com.pg.edu.pl.model.equityEntities.elements.Quote;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -19,7 +20,7 @@ import java.util.List;
  * Represents a prediction for stock price.
  * Inherits from Prediction class.
  */
-public class StockPrediction extends Prediction {
+public class StockPrediction extends Prediction implements Serializable {
 
     /** Stock for which we are predicting the price */
     private final Stock stockPredict;
@@ -131,5 +132,16 @@ public class StockPrediction extends Prediction {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         Date date = sdf.parse(dateString);
         return (double) date.getTime();
+    }
+
+    @Override
+    public String toString() {
+        return "StockPrediction {" +
+                "name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", predictedPrice=" + getPredictedPrice() +
+                ", accuracy=" + getAccuracy() +
+                ", log_date=" + getLog_date() +
+                '}';
     }
 }

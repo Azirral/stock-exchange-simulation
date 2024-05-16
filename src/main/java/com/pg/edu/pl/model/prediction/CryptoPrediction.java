@@ -4,6 +4,7 @@ import com.pg.edu.pl.model.equityEntities.elements.CryptoQuote;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import com.pg.edu.pl.model.equityEntities.categories.Crypto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.ParseException;
@@ -18,7 +19,7 @@ import java.util.concurrent.Future;
  * Represents a prediction for crypto price.
  * Inherits from Prediction class.
  */
-public class CryptoPrediction extends Prediction {
+public class CryptoPrediction extends Prediction implements Serializable {
 
     /** Crypto for which we are predicting the price */
     private final Crypto cryptoPredict;

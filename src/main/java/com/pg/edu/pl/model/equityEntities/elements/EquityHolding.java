@@ -3,6 +3,7 @@ package com.pg.edu.pl.model.equityEntities.elements;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public abstract class EquityHolding implements Comparable<EquityHolding> {
+public abstract class EquityHolding implements Comparable<EquityHolding>, Serializable {
     /**Date of registered screening of equity */
     private String date;
 

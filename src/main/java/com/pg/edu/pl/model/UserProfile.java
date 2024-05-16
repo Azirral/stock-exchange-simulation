@@ -15,7 +15,8 @@ import java.util.UUID;
  * */
 @Setter
 @Getter
-public class UserProfile extends Account implements Cloneable, Comparable<UserProfile>, Comparator<UserProfile>, Serializable {
+public class UserProfile extends Account implements Cloneable, Comparable<UserProfile>, Comparator<UserProfile>,
+        Serializable {
     /** Color of the user's profile picture */
     private Color profileBackground;
     private String name;

@@ -5,6 +5,7 @@ import com.pg.edu.pl.model.equityEntities.categories.Symbol;
 import com.pg.edu.pl.model.equityEntities.elements.EquityHolding;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
  * updating users wallet after purchase transaction has been made.
  */
 @SuperBuilder
-public class Purchase extends Transaction {
+public class Purchase extends Transaction implements Serializable {
 
     /**
      * Constructs a new Purchase object.
